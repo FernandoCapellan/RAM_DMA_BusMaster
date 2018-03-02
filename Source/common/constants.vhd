@@ -14,7 +14,7 @@ package constants is
 
 constant c_data_width 	: natural := 8;
 constant c_addr_width 	: natural := 24;
-constant c_mib 			: natural := 1024 * 1024;
+constant c_mib 			: natural := 1024;
 
 
 subtype t_data is std_logic_vector(c_data_width-1 downto 0);

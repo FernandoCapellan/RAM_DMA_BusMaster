@@ -40,17 +40,22 @@ entity address_selector is
 end address_selector;
 
 architecture rtl of address_selector is
-
+	
+	signal test1 : STD_LOGIC_VECTOR (3 downto 0);
+	signal test2 : STD_LOGIC_VECTOR (20 downto 0);
+	
 begin
 	p_switch : process(reg, address) is
 	begin
-		if reg = '1' then
-			dma_addr <= (others => '0');
-			ram_addr <= address(20 downto 0);
-		else
-			dma_addr <= address(3 downto 0);
-			ram_addr <= (others => '0');
-		end if;
+--		if reg = '1' then
+--			dma_addr <= (others => '0');
+--			ram_addr <= address(20 downto 0);
+--		else
+--			dma_addr <= address(3 downto 0);
+--			ram_addr <= (others => '0');
+--		end if;
+		test1 <= address(3 downto 0);
+		test2 <= address(20 downto 0);
 	end process p_switch;
 
 

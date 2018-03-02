@@ -1,0 +1,2 @@
+common	"common/constants.vhd"
+work	"modules/address_selector.vhd"
