@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: 		 GMV
+-- Engineer: 		 Fernando Capellan
 -- 
 -- Create Date:    16:22:40 03/01/2018 
 -- Design Name: 
--- Module Name:    address_selector - Behavioral 
+-- Module Name:    address_selector - rtl 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -33,10 +33,10 @@ use common.constants.all;
 --use UNISIM.VComponents.all;
 
 entity address_selector is
-    Port ( address 	: in  STD_LOGIC_VECTOR (c_addr_width - 1 downto 0); --(20 downto 0);
-           reg 		: in  STD_LOGIC;
-           dma_addr 	: out  STD_LOGIC_VECTOR (3 downto 0);
-           ram_addr 	: out  STD_LOGIC_VECTOR (20 downto 0));
+    Port ( address 	: in  	STD_LOGIC_VECTOR (c_addr_width - 1 downto 0); --(20 downto 0);
+           reg 		: in  	STD_LOGIC;
+           dma_addr 	: out  	STD_LOGIC_VECTOR (3 downto 0);
+           ram_addr 	: out  	STD_LOGIC_VECTOR (20 downto 0));
 end address_selector;
 
 architecture rtl of address_selector is
