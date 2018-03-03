@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   09:25:14 03/02/2018
+-- Create Date:   12:25:14 03/03/2018
 -- Design Name:   
--- Module Name:   C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_ram_2mib.vhd
+-- Module Name:   C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_ram.vhd
 -- Project Name:  RAM_DMA_BusMaster
 -- Target Device:  
 -- Tool versions:  
@@ -27,21 +27,24 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+use ieee.numeric_std.all;
+library common;
+use common.constants.all;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_ram_2mib IS
-END tb_ram_2mib;
+ENTITY tb_ram IS
+END tb_ram;
  
-ARCHITECTURE behavior OF tb_ram_2mib IS 
+ARCHITECTURE behavior OF tb_ram IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT ram_2mib
+    COMPONENT ram
     PORT(
-         data : INOUT  std_logic_vector(7 downto 0);
+         data : INOUT  t_data;
          address : IN  std_logic_vector(20 downto 0);
          rw : IN  std_logic;
          clk : IN  std_logic;
@@ -52,12 +55,15 @@ ARCHITECTURE behavior OF tb_ram_2mib IS
 
    --Inputs
    signal addr : std_logic_vector(20 downto 0) := (others => '0');
-   signal rw : std_logic := '0';
+   signal rw : std_logic := '1';
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
 
 	--BiDirs
-   signal io_data : std_logic_vector(7 downto 0);
+   signal io_data : t_data;
+	
+	signal io_data_write : t_data := (others => '0');
+	
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -65,7 +71,7 @@ ARCHITECTURE behavior OF tb_ram_2mib IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: ram_2mib PORT MAP (
+   uut: ram PORT MAP (
           data => io_data,
           address => addr,
           rw => rw,
@@ -73,7 +79,7 @@ BEGIN
           rst => rst
         );
 		  
-	io_data <= T_Tx_Data WHEN T_WriteEn = '1';
+	io_data <= io_data_write WHEN rw = '0' else (others => 'Z');
 
    -- Clock process definitions
    clk_process :process
@@ -96,33 +102,33 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-		variable v_addr : unsigned(3 downto 0) := "0000";
+		variable v_addr : unsigned(20 downto 0) := (others => '0');
    begin
 		addr <= std_logic_vector(v_addr);
 		rw <= '1';
-		io_data <= (others => 'Z');
       wait until rst='0';
 		wait until rising_edge(clk);
 
 		-- writing test
 		rw <= '0';
-		for i in 0 to 16 loop
-			v_addr := v_addr + 1;
+		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
-			io_data <= std_logic_vector(v_addr * 2);
+			io_data_write <= std_logic_vector(v_addr(7 downto 0));
 			wait until rising_edge(clk);
+			v_addr := v_addr + 1;
 		end loop;
 		
-		-- read test
-		v_addr := 0;
-		addr <= std_logic_vector(v_addr);
 		rw <= '1';
-		io_data <= (others => 'Z');
-		for i in 0 to 16 loop
-			v_addr := v_addr + 1;
+		v_addr := (others => '0');
+		addr <= std_logic_vector(v_addr);
+		wait for clk_period * 10;
+		
+		-- read test
+		
+		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
-			io_data <= (others => 'Z');
 			wait until rising_edge(clk);
+			v_addr := v_addr + 1;
 		end loop;
 
       wait;

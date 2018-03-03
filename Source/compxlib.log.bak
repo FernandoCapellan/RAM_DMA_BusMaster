@@ -1,0 +1,41 @@
+    ____  ____
+   /   /\/   /
+  /___/  \  /    VENDOR      : Xilinx Inc.
+  \   \   \/     VERSION     : 14.7 (P.20131013)
+   \   \         APPLICATION : C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe
+   /   /         CONTENTS    : Compilation Log
+  /___/   /\     FILENAME    : compxlib.log
+  \   \  /  \    
+   \___\/\___\
+
+Release 14.7 - C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe 14.7 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Processing command line ...
+Reading the compxlib configuration file - 'compxlib.cfg' ...
+Library Source Paths => 'C:/Xilinx/14.7/ISE_DS/ISE'
+Current Working Directory => 'C:\Users\FECP\Documents\Fernando\VHDL\RAM_DMA_BusMaster\Source'
+Compilation Mode = FAST
+Execute Mode = ON
+Scheduling library installation & compilation for architectures: virtex6
+
+Scheduling library installation & compilation for libraries: simprim unisim xilinxcorelib edk
+
+Signature:-
+------------------------------------------------------------------------------
+C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe -s mti_pe -l vhdl -p C:/Modeltech_pe_edu_10.4a/win32pe_edu -arch virtex6 -lib unisim -lib simprim -lib xilinxcorelib -lib edk -exclude_superseded -intstyle ise 
+------------------------------------------------------------------------------
+
+Setting up the simulator 'mti_pe' for compilation ...
+The executable path is set to 'C:/Modeltech_pe_edu_10.4a/win32pe_edu' ...
+Setting up the source libraries for simulator 'mti_pe' ...
+Retrieving the .pao files for EDK library ...
+Building the library hierarchies from the .pao files for EDK library ...
+Assigning the netlist files to the hierarchies for EDK library ...
+
+
+
+Compiling Xilinx HDL Libraries for 'mti_pe' simulator
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+Language => 'vhdl,verilog'
+ERROR:Compxlib:239 - COMPXLIB[file]: Non-writable setup file 'modelsim.ini' detected.Please ensure that it has write permissions.

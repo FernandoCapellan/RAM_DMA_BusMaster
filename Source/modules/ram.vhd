@@ -80,20 +80,29 @@ begin
 			rsta => rst,
 			wea(0) => write_enable,
 			addra => address,
-			dina => O,
+			dina => data,
 			douta => I
 	);
 
-	iobuf_gen : for x in 0 to c_data_width - 1 generate
-		i_iobuf : iobuf
-			port map (
-				O 	=> O(x),
-				IO 	=> data(x),
-				I 	=> I(x),
-				T => rw
-			);		
-	end generate iobuf_gen;
+--	iobuf_gen : for x in 0 to c_data_width - 1 generate
+--		i_iobuf : iobuf
+--			port map (
+--				O 		=> O(x),
+--				IO 	=> data(x),
+--				I 		=> I(x),
+--				T 		=> rw
+--			);		
+--	end generate iobuf_gen;
 
+	p_impedance : process(rw, I) is
+	begin
+		if rw = '0' then
+			data <= (others => 'Z');
+		else
+			data <= I;
+		end if;
+	end process p_impedance;
+	
 --	p_ram : process(clk) is
 --	begin
 --		if rising_edge(clk) then	-- Synchronous
