@@ -23,10 +23,6 @@ use ieee.numeric_std.all;
 library common;
 use common.constants.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 library UNISIM;
@@ -42,7 +38,6 @@ end ram;
 
 architecture rtl of ram is
 
-	--signal ram : t_ram := (others => (others => '0'));
 	COMPONENT ram_2mib
 		PORT (
 			clka : IN STD_LOGIC;
@@ -72,14 +67,6 @@ component IOBUF is
 	);
 	end component;
 	
---	COMPONENT iobuf
---	port (
---		O	: out std_logic;
---		IO	: inout std_logic;
---		I	: in  std_logic;
---		T	: in  std_logic);
---	end COMPONENT;
-	
 	signal O, I : t_data;
 	signal write_enable : std_logic;
 	
@@ -97,82 +84,15 @@ begin
 			douta => I
 	);
 
---	iobuf_gen : for i in 0 to c_data_width generate
---	begin
---		
---		i_iobuf : iobuf
---			port map (
---				O 	=> O(i),
---				IO 	=> data(i),
---				I 	=> I(i),
---				T => rw
---			);
---		
---	end generate;
-
-	i_iobuf_7 : iobuf
-		port map (
-			O 	=> O(7),
-			IO 	=> data(7),
-			I 	=> I(7),
-			T => rw
-		);
-		
-	i_iobuf_6 : iobuf
-		port map (
-			O 	=> O(6),
-			IO 	=> data(6),
-			I 	=> I(6),
-			T => rw
-		);
-		
-	i_iobuf_5 : iobuf
-		port map (
-			O 	=> O(5),
-			IO 	=> data(5),
-			I 	=> I(5),
-			T => rw
-		);
-		
-	i_iobuf_4 : iobuf
-		port map (
-			O 	=> O(4),
-			IO 	=> data(4),
-			I 	=> I(4),
-			T => rw
-		);
-		
-	i_iobuf_3 : iobuf
-		port map (
-			O 	=> O(3),
-			IO 	=> data(3),
-			I 	=> I(3),
-			T => rw
-		);
-		
-	i_iobuf_2 : iobuf
-		port map (
-			O 	=> O(2),
-			IO 	=> data(2),
-			I 	=> I(2),
-			T => rw
-		);
-		
-	i_iobuf_1 : iobuf
-		port map (
-			O 	=> O(1),
-			IO 	=> data(1),
-			I 	=> I(1),
-			T => rw
-		);
-		
-	i_iobuf_0 : iobuf
-		port map (
-			O 	=> O(0),
-			IO 	=> data(0),
-			I 	=> I(0),
-			T => rw
-		);
+	iobuf_gen : for x in 0 to c_data_width - 1 generate
+		i_iobuf : iobuf
+			port map (
+				O 	=> O(x),
+				IO 	=> data(x),
+				I 	=> I(x),
+				T => rw
+			);		
+	end generate iobuf_gen;
 
 --	p_ram : process(clk) is
 --	begin
