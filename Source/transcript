@@ -3,7 +3,7 @@
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 20:47:08 on Mar 03,2018
+# Start time: 14:42:35 on Mar 04,2018
 # vcom -reportprogress 300 -explicit -93 ipcore_dir/ram_2mib.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -13,12 +13,12 @@
 # -- Loading package std_logic_arith
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Loading entity BLK_MEM_GEN_V7_3
-# End time: 20:47:08 on Mar 03,2018, Elapsed time: 0:00:00
+# End time: 14:42:35 on Mar 04,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # ** Warning: (vlib-34) Library already exists at "common".
 # 
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 20:47:08 on Mar 03,2018
+# Start time: 14:42:35 on Mar 04,2018
 # vcom -reportprogress 300 -explicit -93 -work common common/constants.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -26,10 +26,10 @@
 # -- Compiling package constants
 # -- Compiling package body constants
 # -- Loading package constants
-# End time: 20:47:08 on Mar 03,2018, Elapsed time: 0:00:00
+# End time: 14:42:35 on Mar 04,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 20:47:08 on Mar 03,2018
+# Start time: 14:42:35 on Mar 04,2018
 # vcom -reportprogress 300 -explicit -93 modules/ram.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -39,10 +39,10 @@
 # -- Loading package VCOMPONENTS
 # -- Compiling entity ram
 # -- Compiling architecture rtl of ram
-# End time: 20:47:08 on Mar 03,2018, Elapsed time: 0:00:00
+# End time: 14:42:35 on Mar 04,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 20:47:08 on Mar 03,2018
+# Start time: 14:42:35 on Mar 04,2018
 # vcom -reportprogress 300 -explicit -93 tb/tb_ram.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -51,7 +51,7 @@
 # -- Loading package constants
 # -- Compiling entity tb_ram
 # -- Compiling architecture behavior of tb_ram
-# End time: 20:47:08 on Mar 03,2018, Elapsed time: 0:00:00
+# End time: 14:42:35 on Mar 04,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # //  ModelSim PE Student Edition 10.4a Apr  7 2015 
 # //
@@ -72,7 +72,7 @@
 # // FOR HIGHER EDUCATION PURPOSES ONLY
 # //
 # vsim -gui -do "do {tb_ram.fdo}" 
-# Start time: 20:47:08 on Mar 03,2018
+# Start time: 14:42:36 on Mar 04,2018
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -91,28 +91,12 @@
 #    Time: 0 ps  Iteration: 0  Instance: /tb_ram/uut/i_ram_2mib/U0/native_mem_module/mem_module
 # Loading xilinxcorelib.blk_mem_gen_v7_3_output_stage(output_stage_behavioral)
 # Loading xilinxcorelib.blk_mem_gen_v7_3_softecc_output_reg_stage(softecc_output_reg_stage_behavioral)
-# ** Warning: Design size of 15244 statements or 8 leaf instances exceeds ModelSim PE Student Edition recommended capacity.
+# ** Warning: Design size of 15241 statements or 8 leaf instances exceeds ModelSim PE Student Edition recommended capacity.
 # Expect performance to be quite adversely affected.
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-# 
-#           File in use by: fecp  Hostname: LTFECP  ProcessID: 7888
-# 
-#           Attempting to use alternate WLF file "./wlft8i87m4".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-# 
-#           Using alternate file: ./wlft8i87m4
-# 
 # .main_pane.wave.interior.cs.body.pw.wf
 # .main_pane.structure.interior.cs.body.struct
 # .main_pane.objects.interior.cs.body.tree
 # ** Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior.
 #    Time: 265 ns  Iteration: 1  Instance: /tb_ram/uut/i_ram_2mib/U0/native_mem_module/mem_module
-add wave -position 0  /tb_ram/stim_proc/v_addr
-restart
-# ** Note:  Block Memory Generator data initialization complete.
-#    Time: 0 ps  Iteration: 0  Instance: /tb_ram/uut/i_ram_2mib/U0/native_mem_module/mem_module
-run
-# ** Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior.
-#    Time: 265 ns  Iteration: 1  Instance: /tb_ram/uut/i_ram_2mib/U0/native_mem_module/mem_module
-# End time: 20:56:05 on Mar 03,2018, Elapsed time: 0:08:57
-# Errors: 0, Warnings: 3
+# End time: 14:45:37 on Mar 04,2018, Elapsed time: 0:03:01
+# Errors: 0, Warnings: 1

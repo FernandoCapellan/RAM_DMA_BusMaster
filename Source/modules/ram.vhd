@@ -49,24 +49,6 @@ architecture rtl of ram is
 		);
 	END COMPONENT;
 	
-component IOBUF is
-	generic(
-		CAPACITANCE			: string		:= "DONT_CARE";
-      DRIVE					: integer	:= 12;
-      IBUF_DELAY_VALUE	: string 	:= "0";
-      IBUF_LOW_PWR		: boolean	:=  TRUE;
-      IFD_DELAY_VALUE	: string		:= "AUTO";
-      IOSTANDARD			: string		:= "DEFAULT";
-      SLEW					: string		:= "SLOW"
-	);
-	port(
-		O  : out   std_logic;
-		IO : inout std_logic;
-		I  : in    std_logic;
-		T  : in    std_logic
-	);
-	end component;
-	
 	signal O, I : t_data;
 	signal write_enable : std_logic;
 	
@@ -84,16 +66,6 @@ begin
 			douta => I
 	);
 
---	iobuf_gen : for x in 0 to c_data_width - 1 generate
---		i_iobuf : iobuf
---			port map (
---				O 		=> O(x),
---				IO 	=> data(x),
---				I 		=> I(x),
---				T 		=> rw
---			);		
---	end generate iobuf_gen;
-
 	p_impedance : process(rw, I) is
 	begin
 		if rw = '0' then
@@ -102,22 +74,6 @@ begin
 			data <= I;
 		end if;
 	end process p_impedance;
-	
---	p_ram : process(clk) is
---	begin
---		if rising_edge(clk) then	-- Synchronous
---			if rst = '1' then			-- Reset: wipe RAM
---				ram <= (others => (others => '0'));
---			else
---				if rw = '0' then				-- Write mode
---					ram(to_integer(unsigned(address))) <= data;
---					data <= (others => 'Z');
---				else								-- Read mode
---					data <= ram(to_integer(unsigned(address)));			
---				end if;
---			end if;
---		end if;
---	end process p_ram;
 	
 end rtl;
 
