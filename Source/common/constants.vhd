@@ -21,6 +21,7 @@ subtype t_data is std_logic_vector(c_data_width-1 downto 0);
 subtype t_addr is std_logic_vector(c_addr_width-1 downto 0);
 
 type t_ram is array (0 to 2 * c_mib - 1) of t_data;
+type t_registers is array (0 to 11) of t_data;
 
 end constants;
 

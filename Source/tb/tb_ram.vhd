@@ -44,21 +44,27 @@ ARCHITECTURE behavior OF tb_ram IS
  
     COMPONENT ram
     PORT(
-         data : INOUT  t_data;
-         address : IN  std_logic_vector(20 downto 0);
-         rw : IN  std_logic;
-         clk : IN  std_logic;
-         rst : IN  std_logic
+         data 		: INOUT  t_data;
+         address 	: IN  	std_logic_vector(20 downto 0);
+         ce 		: IN  	std_logic;
+         rw 		: IN  	std_logic;
+		   rd_en 		: out  	STD_LOGIC;
+         clk 		: IN  	std_logic;
+         rst 		: IN  	std_logic
         );
     END COMPONENT;
     
 
    --Inputs
    signal addr : std_logic_vector(20 downto 0) := (others => '0');
+   signal ce : std_logic := '1';
    signal rw : std_logic := '1';
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
 
+   --Outputs
+   signal rd_en : std_logic := '0';
+	
 	--BiDirs
    signal io_data : t_data;
 	
@@ -74,12 +80,14 @@ BEGIN
    uut: ram PORT MAP (
           data => io_data,
           address => addr,
+          ce => ce,
           rw => rw,
+          rd_en => rd_en,
           clk => clk,
           rst => rst
         );
 		  
-	io_data <= io_data_write WHEN rw = '0' else (others => 'Z');
+	io_data <= io_data_write WHEN rw = '0' and ce = '0' else (others => 'Z');
 
    -- Clock process definitions
    clk_process :process
@@ -105,11 +113,13 @@ BEGIN
 		variable v_addr : unsigned(20 downto 0) := (others => '0');
    begin
 		addr <= std_logic_vector(v_addr);
+		ce <= '1';
 		rw <= '1';
       wait until rst='0';
 		wait until rising_edge(clk);
 
 		-- writing test
+		ce <= '0';
 		rw <= '0';
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
@@ -118,12 +128,15 @@ BEGIN
 			v_addr := v_addr + 1;
 		end loop;
 		
+		ce <= '1';
 		rw <= '1';
 		v_addr := (others => '0');
 		addr <= std_logic_vector(v_addr);
-		wait for clk_period * 10;
+		wait for clk_period * 9;
 		
-		-- read test
+		-- read test		
+		ce <= '0';
+		wait for clk_period;
 		
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
