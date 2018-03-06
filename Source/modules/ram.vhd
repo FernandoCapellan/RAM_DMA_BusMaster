@@ -33,7 +33,8 @@ entity ram is
            address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
-			  rd_en 		: out  	STD_LOGIC;
+			  rd_en 		: in  	STD_LOGIC;
+			  wr_en 		: out  	STD_LOGIC;
 			  clk 		: in  	STD_LOGIC;
            rst 		: in  	STD_LOGIC);
 end ram;
@@ -42,22 +43,23 @@ architecture rtl of ram is
 
 	COMPONENT ram_2mib
 		PORT (
-			clka : IN STD_LOGIC;
-			rsta : IN STD_LOGIC;
-			wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+			clka 	: IN STD_LOGIC;
+			rsta 	: IN STD_LOGIC;
+			wea 	: IN STD_LOGIC_VECTOR(0 DOWNTO 0);
 			addra : IN STD_LOGIC_VECTOR(20 DOWNTO 0);
-			dina : IN t_data;
+			dina 	: IN t_data;
 			douta : OUT t_data
 		);
 	END COMPONENT;
 	
-	signal I : t_data;
-	signal write_enable : std_logic;
-	signal rd_en_ff : std_logic := '0';
+	signal I 				: t_data;
+	signal wr_en_ff_1, wr_en_ff_2		: std_logic := '0'; -- active = '0'
+	signal write_enable	: std_logic := '0';
 	
 begin
 
-	write_enable <= not ce and not rw;
+	wr_en <= wr_en_ff_1;
+	write_enable <= rd_en and not rw and not ce;
 		
 	i_ram_2mib : ram_2mib
 		PORT MAP (
@@ -69,26 +71,26 @@ begin
 			douta => I
 	);
 
-	p_impedance : process(ce, rw, I) is
+	p_impedance : process(wr_en_ff_1, I) is
 	begin
-		if ce = '0' and rw = '1' then
+		if wr_en_ff_1 = '1' then
 			data <= I;
 		else
 			data <= (others => 'Z');
 		end if;
 	end process p_impedance;
 
-	p_rd_en : process(clk) is
+	p_wr_en : process(clk) is
 	begin
 		if rising_edge(clk) then
 			if ce = '0' and rw = '1' then
-				rd_en_ff <= '1';
+				wr_en_ff_2 <= '1';
 			else
-				rd_en_ff <= '0';
+				wr_en_ff_2 <= '0';
 			end if;
-			rd_en <= rd_en_ff;
+			wr_en_ff_1 <= wr_en_ff_2;
 		end if;
-	end process p_rd_en;
+	end process p_wr_en;
 	
 end rtl;
 

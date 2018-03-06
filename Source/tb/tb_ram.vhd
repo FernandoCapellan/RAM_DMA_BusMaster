@@ -43,15 +43,14 @@ ARCHITECTURE behavior OF tb_ram IS
     -- Component Declaration for the Unit Under Test (UUT)
  
     COMPONENT ram
-    PORT(
-         data 		: INOUT  t_data;
-         address 	: IN  	std_logic_vector(20 downto 0);
-         ce 		: IN  	std_logic;
-         rw 		: IN  	std_logic;
-		   rd_en 		: out  	STD_LOGIC;
-         clk 		: IN  	std_logic;
-         rst 		: IN  	std_logic
-        );
+    Port ( data 		: inout  t_data;
+           address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
+           ce 			: in  	STD_LOGIC;
+           rw 			: in  	STD_LOGIC;
+			  wr_en 		: in  	STD_LOGIC;
+			  rd_en 		: out  	STD_LOGIC;
+			  clk 		: in  	STD_LOGIC;
+           rst 		: in  	STD_LOGIC);
     END COMPONENT;
     
 
@@ -59,6 +58,7 @@ ARCHITECTURE behavior OF tb_ram IS
    signal addr : std_logic_vector(20 downto 0) := (others => '0');
    signal ce : std_logic := '1';
    signal rw : std_logic := '1';
+   signal wr_en : std_logic := '0';
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
 
@@ -82,6 +82,7 @@ BEGIN
           address => addr,
           ce => ce,
           rw => rw,
+          wr_en => wr_en,
           rd_en => rd_en,
           clk => clk,
           rst => rst
@@ -124,19 +125,21 @@ BEGIN
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
 			io_data_write <= std_logic_vector(v_addr(7 downto 0));
+			wr_en <= '1';
 			wait until rising_edge(clk);
 			v_addr := v_addr + 1;
+			wr_en <= '0';
 		end loop;
 		
 		ce <= '1';
 		rw <= '1';
 		v_addr := (others => '0');
 		addr <= std_logic_vector(v_addr);
-		wait for clk_period * 9;
-		
+		--wait for clk_period * 9;
+		wait for clk_period * 10;
 		-- read test		
 		ce <= '0';
-		wait for clk_period;
+		wait for clk_period/2;
 		
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);

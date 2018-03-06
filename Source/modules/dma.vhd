@@ -37,31 +37,38 @@ entity dma is
            address	: inout	STD_LOGIC_VECTOR (20 downto 0);
            reg			: in		STD_LOGIC;
            ce			: inout	STD_LOGIC;
-           busrq		: out		STD_LOGIC;
-           busak		: in		STD_LOGIC);
+			  rw			: inout	STD_LOGIC;
+           bus_rq		: out		STD_LOGIC;
+           bus_ak		: in		STD_LOGIC;	
+			  ram_rw		: out		STD_LOGIC;		  
+           ram_ce		: out		STD_LOGIC;
+           ram_addr	: out		STD_LOGIC
+			  );
 end dma;
 
 architecture rtl of dma is
 
 	-- REGISTERS --
-	signal registers : t_registers := (others => (others =>'0'));
+	signal registers	: t_registers := (others => (others =>'0'));
 	-- Base address RAM --
-	signal BASEM	: t_data := (others => 0);
-	signal BASEH	: t_data := (others => 0);
+	signal BASEM		: t_data := (others => 0);
+	signal BASEH		: t_data := (others => 0);
 	-- Source address --
-	signal SRCL		: t_data := (others => 0);
-	signal SRCM		: t_data := (others => 0);
-	signal SRCH		: t_data := (others => 0);
+	signal SRCL			: t_data := (others => 0);
+	signal SRCM			: t_data := (others => 0);
+	signal SRCH			: t_data := (others => 0);
 	-- Destunation address --
-	signal DSTL		: t_data := (others => 0);
-	signal DSTM		: t_data := (others => 0);
-	signal DSTH		: t_data := (others => 0);
+	signal DSTL			: t_data := (others => 0);
+	signal DSTM			: t_data := (others => 0);
+	signal DSTH			: t_data := (others => 0);
 	-- Transfer length --
-	signal LENL		: t_data := (others => 0);
-	signal LENH		: t_data := (others => 0);
-	signal LENU		: t_data := (others => 0);
+	signal LENL			: t_data := (others => 0);
+	signal LENH			: t_data := (others => 0);
+	signal LENU			: t_data := (others => 0);
 	-- Control register --
-	signal CTRL		: t_data := (others => 0);
+	signal CTRL			: t_data := (others => 0);
+	
+	signal mode			: std_logic := '0'; -- 0 = slave, 1 = master
 	
 begin	
 	BASEM	<= registers(0);
@@ -76,6 +83,25 @@ begin
 	LENH	<= registers(9);
 	LENU	<= registers(10);
 	CTRL	<= registers(11);
+	
+	p_reset : process (clk, rst) is
+	begin
+		if rising_edge(clk) then
+			if rst = '1' then
+				registers <= (others => (others =>'0'));
+				mode <= '0';
+			end if;
+		end if;
+	end process p_reset;
+	
+	p_impedance : process(role) is
+	begin
+		if mode = '0' then	-- If slave, inout ports act as inputs and have to be set to high impedance
+			address <= (others => 'Z');
+			ce <= 'Z';
+			rw <= 'Z';
+		end if;
+	end process p_impedance;
 
 	p_register : process (reg, ce) is
 	begin
