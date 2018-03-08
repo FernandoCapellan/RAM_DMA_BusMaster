@@ -126,11 +126,14 @@ BEGIN
 		port_addr	<= (others => '0');
 		reg 			<= '1';
 		port_ce		<= '1';
-		port_rw		<= '1';
+		port_rw		<= 'Z';
 		bus_ak		<= '1';
 		
       wait until rst='0';
 		
+		-- WRITE ON RAM START
+		
+		-- Base address for local RAM mapping	= 0;
 		reg <= '0';
 		port_ce <= '0';
 		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0000";		-- BASEM
@@ -143,6 +146,7 @@ BEGIN
 		data <= (others => '0');
 		wait for clk_period;
 		
+		-- First address from port = 2;
 		reg <= '0';
 		port_ce <= '0';
 		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0010";		-- SRCL
@@ -161,6 +165,7 @@ BEGIN
 		data <= (others => '0');
 		wait for clk_period;
 		
+		-- First address for RAM = 4;
 		reg <= '0';
 		port_ce <= '0';
 		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0101";		-- DSTL
@@ -179,6 +184,7 @@ BEGIN
 		data <= (others => '0');
 		wait for clk_period;
 		
+		-- Data to be transmitted = 7;
 		reg <= '0';
 		port_ce <= '0';
 		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1000";		-- LENL
@@ -203,11 +209,12 @@ BEGIN
 		wait for clk_period;
 		LEN <= LENU & LENH & LENL;
 		
+		-- SRC autoinc: -1; DST autoinc: -1; Mode: Read from port; Start: Enabled;
 		reg <= '0';
 		port_ce <= '0';
 		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1011";		-- CTRL
 		data <= "11011001";
-		wait for clk_period;								--	START_ST		
+		wait for clk_period;							--	START_ST		
 		reg <= '1';
 		
 		wait until bus_rq = '0';					--	AK_WAIT_ST
@@ -230,7 +237,115 @@ BEGIN
 		end loop;
 		
 		-- WRITE ON RAM FINISH
+		wait for clk_period * 10;
 		
+		
+		-- READ FROM RAM START
+		
+		-- Base address for local RAM mapping = 0
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0000";		-- BASEM
+		data <= (others => '0');
+		wait for clk_period;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0001";		-- BASEH
+		data <= (others => '0');
+		wait for clk_period;
+		
+		-- First address from RAM: address in which writing ended = x'FFFFFE = -2;
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0010";		-- SRCL
+		data <= "11111110";
+		wait for clk_period;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0011";		-- SRCM
+		data <= "11111111";
+		wait for clk_period;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0100";		-- SRCH
+		data <= "11111111";
+		wait for clk_period;
+		
+		-- First address for port : address in which reading ended = x'FFFFFC = -4;
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0101";		-- DSTL
+		data <= "11111100";
+		wait for clk_period;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0110";		-- DSTM
+		data <= "11111111";
+		wait for clk_period;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "0111";		-- DSTH
+		data <= "11111111";
+		wait for clk_period;
+		
+		-- Data to be transmitted = 7;
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1000";		-- LENL
+		data <= "00000111";
+		wait for clk_period;
+		LENL <= data;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1001";		-- LENH
+		data <= (others => '0');
+		wait for clk_period;
+		LENH <= data;
+		
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1010";		-- LENU
+		data <= (others => '0');
+		wait for clk_period;
+		LENU <= data;
+		reg <= '1';
+		wait for clk_period;
+		LEN <= LENU & LENH & LENL;
+		
+		-- SRC autoinc: 1; DST autoinc: 1; Mode: Read from RAM; Start: Enabled;
+		reg <= '0';
+		port_ce <= '0';
+		port_addr <= (c_addr_width - 1 downto 4 => '0') & "1011";		-- CTRL
+		data <= "00100111";
+		wait for clk_period;							--	START_ST		
+		reg <= '1';
+		
+		wait until bus_rq = '0';					--	AK_WAIT_ST
+		wait for clk_period;
+		bus_ak				<= '0';
+			
+		wait for clk_period;							--	TRANSFER_ST
+		bus_ak				<= '1';
+		port_addr			<= (others => 'Z');
+		port_ce				<= 'Z';
+		
+		for I in 0 to to_integer(unsigned(LEN)) loop
+		
+			wait for clk_period;							--	PORT_READ_ST
+				
+			wait for clk_period;							--	RAM_WRITE_ST
+			
+			wait for clk_period;							--	INDEX_ST
+			
+		end loop;
+				
+		-- READ FROM RAM FINISH
 		
       wait;
    end process;

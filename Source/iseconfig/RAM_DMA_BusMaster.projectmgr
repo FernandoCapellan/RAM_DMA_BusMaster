@@ -40,7 +40,7 @@
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000130000000040101000100000000000000000000000064ffffffff000000810000000000000004000000420000000100000000000000240000000100000000000000660000000100000000000000640000000100000000</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000263000000040101000100000000000000000000000064ffffffff000000810000000000000004000000420000000100000000000000240000000100000000000000660000000100000000000001970000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
       <CurrentItem>constants.vhd</CurrentItem>
    </ItemView>
@@ -80,6 +80,7 @@
       <ClosedNodes>
          <ClosedNodesVersion>2</ClosedNodesVersion>
          <ClosedNode>/tb_a1_complement_adder - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_a1_complement_adder.vhd</ClosedNode>
+         <ClosedNode>/tb_dma - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma.vhd</ClosedNode>
          <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd</ClosedNode>
          <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd/uut - dma_state_machine - fsm</ClosedNode>
          <ClosedNode>/tb_ram - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_ram.vhd</ClosedNode>
@@ -90,9 +91,9 @@
       <SelectedItems>
          <SelectedItem>tb_dma - behavior (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_dma.vhd)</SelectedItem>
       </SelectedItems>
-      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="vertical" >2</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001fb000000020000000000000000000000000200000064ffffffff000000810000000300000002000001fb0000000100000003000000000000000100000003</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001ae000000020000000000000000000000000200000064ffffffff000000810000000300000002000001ae0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
       <CurrentItem>tb_dma - behavior (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_dma.vhd)</CurrentItem>
    </ItemView>

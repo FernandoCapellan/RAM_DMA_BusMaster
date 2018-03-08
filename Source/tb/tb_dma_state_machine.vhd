@@ -152,7 +152,7 @@ BEGIN
 		bus_ak				<= '1';
 		base_address		<= "111111111111111111111110";	-- Base address for local RAM mapping	= address in which writing ended = x'FFFFFE = -2;
 		source_address		<= "000000000000000000000000";	-- First address from RAM	 				= 0;
-		destin_address		<= "111111111111111111111100";	-- First address for port 					= address in which writing ended = x'FFFFFC = -4;
+		destin_address		<= "111111111111111111111100";	-- First address for port 					= address in which reading ended = x'FFFFFC = -4;
 		transfer_length	<= "000000000000000000000111";	-- Data to be transmitted					= 7;
 		
 		ctrl					<= "00100111"; 						-- SRC autoinc: 1; DST autoinc: 1; Mode: Read from RAM; Start: Enabled;
