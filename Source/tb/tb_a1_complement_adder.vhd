@@ -95,23 +95,39 @@ BEGIN
    begin		
 		address <= "0000";
 		step <= "0001";
-      wait for 100 ns;	
+      wait for 100 ns;		-- result = 0001
 		
 		address <= "0000";
-		step <= "1110";
-      wait for 100 ns;	
+		step <= "1100";
+      wait for 100 ns;		-- result = 1101
+		
+		address <= "0101";
+		step <= "1100";
+      wait for 100 ns;		-- result = 0010
+		
+		address <= "0010";
+		step <= "1100";
+      wait for 100 ns;		-- result = 1111
+		
+		address <= "0111";
+		step <= "1100";
+      wait for 100 ns;		-- result = 0100
+		
+		address <= "0000";
+		step <= "1100";
+      wait for 100 ns;		-- result = 1101
 		
 		address <= "0100";
-		step <= "1100";
-      wait for 100 ns;	
-		
-		address <= "0010";
-		step <= "1100";
-      wait for 100 ns;	
-		
-		address <= "0010";
 		step <= "1110";
-      wait for 100 ns;	
+      wait for 100 ns;		-- result = 0011
+		
+		address <= "0001";
+		step <= "1110";
+      wait for 100 ns;		-- result = 0000
+		
+		address <= "1110";
+		step <= "0001";
+      wait for 100 ns;		-- result = 1111
 
       wait for clk_period*10;
 

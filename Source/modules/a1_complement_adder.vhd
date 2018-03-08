@@ -23,10 +23,6 @@ use ieee.numeric_std.all;
 library common;
 use common.constants.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 --library UNISIM;
@@ -44,13 +40,21 @@ entity a1_complement_adder is
 end a1_complement_adder;
 
 architecture rtl of a1_complement_adder is
-
-	signal addition : STD_LOGIC_VECTOR (g_bus_width downto 0); -- 1 bit wider than operands
+	
+	function a1_conv(step: STD_LOGIC_VECTOR (g_bus_width - 1 downto 0)) 
+            return integer is  
+		variable int_step : integer := 0;
+	begin 
+		int_step := to_integer(signed(step));
+		if int_step < 0 then
+			int_step := int_step + 1;
+		end if;
+		return int_step;
+	end function;
 
 begin
 	
-	addition <= std_logic_vector(unsigned('0' & address) + unsigned('0' & step));
-	result <= std_logic_vector(unsigned(addition(g_bus_width - 1 downto 0)) + unsigned(addition(g_bus_width downto g_bus_width)));
-
+	result <= std_logic_vector( to_signed(to_integer(unsigned(address)) + a1_conv(step), g_bus_width));
+	
 end rtl;
 

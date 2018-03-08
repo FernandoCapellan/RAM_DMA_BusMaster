@@ -121,7 +121,7 @@ BEGIN
 	p_rst : process
    begin
      rst <= '1';
-     wait for 250 ns;
+     wait for 45 ns;
      rst <= '0';
      wait;
    end process p_rst;
@@ -136,18 +136,40 @@ BEGIN
 		base_address		<= "000000000000000000000000";	-- Base address for local RAM mapping	= 0;
 		source_address		<= "000000000000000000000010";	-- First address from port 				= 2;
 		destin_address		<= "000000000000000000000100";	-- First address for RAM 					= 4;
-		transfer_length	<= "000000000000000000000011";	-- Data to be transmitted					= 3;
+		transfer_length	<= "000000000000000000000111";	-- Data to be transmitted					= 7;
       wait until rst='0';
-      wait for 100 ns;
-		ctrl					<= "00100101"; 						-- SRC autoinc: 1; DST autoinc: 1; Mode: Read from port; Start: Enabled;
+      wait for 20 ns;
+		ctrl					<= "11011001"; 						-- SRC autoinc: -1; DST autoinc: -1; Mode: Read from port; Start: Enabled;
 				
       wait until bus_rq = '0' and ctrl_stop = '1';
-		ctrl(0) <= '0';
-      wait for 200 ns;
+		wait for clk_period;
+		ctrl(0) 				<= '0';		
+		wait for (clk_period * 1) - clk_period;
+		bus_ak				<= '0';
+      wait for clk_period;
+		bus_ak				<= '1';
+      wait for clk_period * (3 * to_integer((unsigned(transfer_length))));
+		-- Port read / RAM write finish
+		
+		wait for clk_period * 10;
+		-- Read from RAM
+		bus_ak				<= '1';
+		base_address		<= "111111111111111111111110";	-- Base address for local RAM mapping	= address in which writing ended = x'FFFFFE = -2;
+		source_address		<= "000000000000000000000000";	-- First address from RAM	 				= 0;
+		destin_address		<= "111111111111111111111100";	-- First address for port 					= address in which writing ended = x'FFFFFC = -4;
+		transfer_length	<= "000000000000000000000111";	-- Data to be transmitted					= 7;
+		
+		ctrl					<= "00100111"; 						-- SRC autoinc: 1; DST autoinc: 1; Mode: Read from RAM; Start: Enabled;
+		
+		wait until bus_rq = '0' and ctrl_stop = '1';
+		wait for clk_period;
+		ctrl(0) 				<= '0';		
+		wait for (clk_period * 1) - clk_period;
 		bus_ak				<= '0';
       wait for clk_period;
 		bus_ak				<= '1';
       wait for clk_period * (2 * to_integer((unsigned(transfer_length))));
+		-- RAM read / Port write finish
 		
       wait;
    end process;

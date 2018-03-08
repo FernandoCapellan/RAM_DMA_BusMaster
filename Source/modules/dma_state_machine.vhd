@@ -166,7 +166,7 @@ begin
    begin
 		bus_rq				<= '1';
 		--transfer_len		<= (others => '0');
-		ram_addr				<= (others => '0');
+		ram_addr			<= (others => '0');
 		port_addr			<= (others => 'Z');
 		ram_rw				<= '1';
 		port_rw				<= '1';
