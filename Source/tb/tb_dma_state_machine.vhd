@@ -31,10 +31,6 @@ use ieee.numeric_std.all;
 library common;
 use common.constants.all;
  
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
 ENTITY tb_dma_state_machine IS
 END tb_dma_state_machine;
  

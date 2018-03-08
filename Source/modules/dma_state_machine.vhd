@@ -169,9 +169,9 @@ begin
 		ram_addr			<= (others => '0');
 		port_addr			<= (others => 'Z');
 		ram_rw				<= '1';
-		port_rw				<= '1';
+		port_rw				<= 'Z';
 		ram_ce				<= '1';
-		port_ce				<= '1';
+		port_ce				<= 'Z';
 		ctrl_stop			<= '0';	
 
 		--src				<= source_address;
@@ -197,6 +197,7 @@ begin
 			when ram_read_st =>
 				ram_addr <= std_logic_vector(unsigned(src) + unsigned(base));
 				ram_rw <= '1';
+				port_ce <= '1';
 				ram_ce <= '0';
 			
 			when port_write_st =>
@@ -209,12 +210,13 @@ begin
 				port_addr <= src;
 				port_rw <= '1';
 				port_ce <= '0';
+				ram_ce <= '1';
 			
 			when ram_write_st =>
 				ram_addr <= std_logic_vector(unsigned(dst) + unsigned(base));
 				ram_rw <= '0';
-				ram_ce <= '0';
 				port_ce <= '1';
+				ram_ce <= '0';
 			
 			when index_st =>
 				transfer_len <= std_logic_vector(unsigned(transfer_len) - 1);

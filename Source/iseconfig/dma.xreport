@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-03-08T17:12:56</DateModified>
+  <DateModified>2018-03-08T17:12:43</DateModified>
   <ModuleName>dma</ModuleName>
-  <SummaryTimeStamp>2018-03-08T15:50:42</SummaryTimeStamp>
-  <SavedFilePath>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/iseconfig/a1_complement_adder.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source\</ImplementationReportsDirectory>
-  <DateInitialized>2018-03-08T12:41:25</DateInitialized>
+  <SummaryTimeStamp>Unknown</SummaryTimeStamp>
+  <SavedFilePath>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/iseconfig/dma.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source</ImplementationReportsDirectory>
+  <DateInitialized>2018-03-08T17:12:43</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
  <body>
