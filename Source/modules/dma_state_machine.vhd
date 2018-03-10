@@ -53,7 +53,8 @@ entity dma_state_machine is
 			
 			ctrl					: in		t_data;
          bus_rq				: out		STD_LOGIC;
-         bus_ak				: in		STD_LOGIC;			
+         bus_ak				: in		STD_LOGIC;
+         reg					: in		STD_LOGIC;
 		   ctrl_stop			: out		STD_LOGIC;
 		
 		   base_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
@@ -195,7 +196,7 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 		
 		src_step			<= (20 downto ctrl(4 downto 2)'length => ctrl(4 downto 2)(ctrl(4 downto 2)'high)) & ctrl(4 downto 2);
 		dst_step			<= (20 downto ctrl(7 downto 5)'length => ctrl(7 downto 5)(ctrl(7 downto 5)'high)) & ctrl(7 downto 5);
-
+		base <= base_address;
 
 		
       case current_state is
@@ -205,19 +206,23 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 				else
 					ram_data		<= port_data;		-- Slave passive listen
 				end if;
-				ram_addr		<= port_addr;
-				ram_ce		<= port_ce;
-				ram_rw		<= port_rw;
-				ram_rd_en	<= port_rd_en;
-				port_wr_en	<= ram_wr_en;
+				ram_addr			<= port_addr;
+				if reg = '1' then
+					ram_ce		<= port_ce;
+				else
+					ram_ce		<= '1';
+				end if;
+				ram_rw			<= port_rw;
+				ram_rd_en		<= port_rd_en;
+				port_wr_en		<= ram_wr_en;
 						
 			when start_st =>
-            bus_rq 		<= '0';
-				ctrl_stop 	<= '1';
+            bus_rq 			<= '0';
+				ctrl_stop 		<= '1';
 			
 			when ak_wait_st =>
-            bus_rq <= '1';
-				ctrl_stop <= '0';
+            bus_rq 			<= '1';
+				ctrl_stop 		<= '0';
 			
 			when transfer_st =>
 				src				<= source_address;
@@ -226,44 +231,45 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 								
 				
 			when ram_read_st =>
-				ram_addr <= std_logic_vector(unsigned(src) + unsigned(base));
-				ram_ce <= '0';
-				ram_rw <= '1';
-				port_ce <= '1';
+				ram_addr 		<= std_logic_vector(unsigned(src) + unsigned(base));
+				ram_ce 			<= '0';
+				ram_rw 			<= '1';
+				port_ce 			<= '1';
 			
 			when port_write_st =>
-				port_data <= ram_data;
-				port_addr <= dst;
-				port_ce <= '0';
-				port_rw <= '0';
-				port_wr_en <= ram_wr_en;
-				ram_ce <= '1';
+				port_data 		<= ram_data;
+				port_addr 		<= dst;
+				port_ce 			<= '0';
+				port_rw 			<= '0';
+				port_wr_en 		<= ram_wr_en;
+				ram_ce 			<= '1';
 				
 				
 			when port_read_st =>
-				port_addr <= src;
-				port_ce <= '0';
-				port_rw <= '1';
-				ram_ce <= '1';
+				port_addr 		<= src;
+				port_ce 			<= '0';
+				port_rw 			<= '1';
+				ram_ce 			<= '1';
 			
 			when ram_write_st =>
-				port_ce <= '1';
-				ram_data		<= port_data;
-				ram_addr <= std_logic_vector(unsigned(dst) + unsigned(base));
-				ram_ce <= '0';
-				ram_rw <= '0';
-				ram_rd_en	<= port_rd_en;
+				port_ce 			<= '1';
+				ram_data			<= port_data;
+				ram_addr 		<= std_logic_vector(unsigned(dst) + unsigned(base));
+				ram_ce 			<= '0';
+				ram_rw 			<= '0';
+				ram_rd_en		<= port_rd_en;
 				
 			
 			when port_write_finish_st =>
-				port_ce <= '1';
+				port_ce 			<= '1';
 			when ram_write_finish_st =>
-				ram_ce <= '1';
-			
+				ram_ce 			<= '1';			
+				-- ram_rd_en	<= '0'; implicit: opposite module disables signal
+				
 			when index_st =>
-				transfer_len <= std_logic_vector(unsigned(transfer_len) - 1);
-				src <= src_result;
-				dst <= dst_result;
+				transfer_len 	<= std_logic_vector(unsigned(transfer_len) - 1);
+				src 				<= src_result;
+				dst 				<= dst_result;
 			
          when others =>
 				null;

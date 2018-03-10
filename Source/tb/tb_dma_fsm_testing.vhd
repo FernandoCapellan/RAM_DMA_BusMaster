@@ -44,28 +44,33 @@ ARCHITECTURE behavior OF tb_dma_fsm_testing IS
  
     COMPONENT dma_state_machine
     PORT(
-         clk : IN  std_logic;
-         rst : IN  std_logic;
-         port_data : INOUT  std_logic_vector(7 downto 0);
-         port_addr : INOUT  std_logic_vector(20 downto 0);
-         port_ce : INOUT  std_logic;
-         port_rw : INOUT  std_logic;
-         port_rd_en : IN  std_logic;
-         port_wr_en : OUT  std_logic;
-         ram_data : INOUT  std_logic_vector(7 downto 0);
-         ram_addr : OUT  std_logic_vector(20 downto 0);
-         ram_ce : OUT  std_logic;
-         ram_rw : OUT  std_logic;
-         ram_rd_en : OUT  std_logic;
-         ram_wr_en : IN  std_logic;
-         ctrl : IN  std_logic_vector(7 downto 0);
-         bus_rq : OUT  std_logic;
-         bus_ak : IN  std_logic;
-         ctrl_stop : OUT  std_logic;
-         base_address : IN  std_logic_vector(20 downto 0);
-         source_address : IN  std_logic_vector(20 downto 0);
-         destin_address : IN  std_logic_vector(20 downto 0);
-         transfer_length : IN  std_logic_vector(20 downto 0)
+         clk 					: IN  	std_logic;
+         rst 					: IN  	std_logic;
+			
+         port_data 			: INOUT  std_logic_vector(7 downto 0);
+         port_addr 			: INOUT  std_logic_vector(20 downto 0);
+         port_ce 				: INOUT  std_logic;
+         port_rw 				: INOUT  std_logic;
+         port_rd_en 			: IN  	std_logic;
+         port_wr_en 			: OUT  	std_logic;
+			
+         ram_data 			: INOUT  std_logic_vector(7 downto 0);
+         ram_addr 			: OUT  	std_logic_vector(20 downto 0);
+         ram_ce 				: OUT  	std_logic;
+         ram_rw 				: OUT  	std_logic;
+         ram_rd_en 			: OUT  	std_logic;
+         ram_wr_en 			: IN  	std_logic;
+			
+         ctrl 					: IN  	std_logic_vector(7 downto 0);
+         bus_rq 				: OUT  	std_logic;
+         bus_ak 				: IN  	std_logic;
+         reg					: IN		std_logic;
+         ctrl_stop 			: OUT  	std_logic;
+			
+         base_address 		: IN  	std_logic_vector(20 downto 0);
+         source_address 	: IN  	std_logic_vector(20 downto 0);
+         destin_address 	: IN  	std_logic_vector(20 downto 0);
+         transfer_length 	: IN  	std_logic_vector(20 downto 0)
         );
     END COMPONENT;
     
@@ -76,7 +81,8 @@ ARCHITECTURE behavior OF tb_dma_fsm_testing IS
    signal port_rd_en : std_logic := '0';
    signal ram_wr_en : std_logic := '0';
    signal ctrl : std_logic_vector(7 downto 0) := (others => '0');
-   signal bus_ak : std_logic := '0';
+   signal bus_ak : std_logic := '1';
+   signal reg : std_logic := '1';
    signal base_address : std_logic_vector(20 downto 0) := (others => '0');
    signal source_address : std_logic_vector(20 downto 0) := (others => '0');
    signal destin_address : std_logic_vector(20 downto 0) := (others => '0');
@@ -110,22 +116,27 @@ BEGIN
    uut: dma_state_machine PORT MAP (
           clk => clk,
           rst => rst,
+			 
           port_data => port_data,
           port_addr => port_addr,
           port_ce => port_ce,
           port_rw => port_rw,
           port_rd_en => port_rd_en,
           port_wr_en => port_wr_en,
+			 
           ram_data => ram_data,
           ram_addr => ram_addr,
           ram_ce => ram_ce,
           ram_rw => ram_rw,
           ram_rd_en => ram_rd_en,
           ram_wr_en => ram_wr_en,
+			 
           ctrl => ctrl,
           bus_rq => bus_rq,
           bus_ak => bus_ak,
+			 reg => reg,
           ctrl_stop => ctrl_stop,
+			 
           base_address => base_address,
           source_address => source_address,
           destin_address => destin_address,

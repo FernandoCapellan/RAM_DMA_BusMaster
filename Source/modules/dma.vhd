@@ -33,23 +33,28 @@ use common.constants.all;
 --use UNISIM.VComponents.all;
 
 entity dma is
-    Port ( port_data		: inout	t_data;
-           port_addr		: inout	t_addr;
+    Port ( 
+			  clk				: in		STD_LOGIC;
+			  rst				: in		STD_LOGIC;
+			  
+			  port_data		: inout	t_data;
+           port_addr		: inout	STD_LOGIC_VECTOR(20 DOWNTO 0);
            port_ce		: inout	STD_LOGIC;
 			  port_rw		: inout	STD_LOGIC;
 			  port_rd_en	: in		STD_LOGIC;
 			  port_wr_en	: out		STD_LOGIC;
-           reg				: in		STD_LOGIC;
-           bus_rq			: out		STD_LOGIC;
-           bus_ak			: in		STD_LOGIC;
+			  
 			  ram_data		: inout	t_data;
-           ram_addr		: out		t_addr;
+           ram_addr		: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
            ram_ce			: out		STD_LOGIC;
 			  ram_rw			: out		STD_LOGIC;
 			  ram_rd_en		: out		STD_LOGIC;
 			  ram_wr_en		: in		STD_LOGIC;
-			  clk				: in		STD_LOGIC;
-			  rst				: in		STD_LOGIC
+			  
+           bus_rq			: out		STD_LOGIC;
+           bus_ak			: in		STD_LOGIC;
+			  
+           reg				: in		STD_LOGIC
 			  );
 end dma;
 
@@ -57,8 +62,8 @@ architecture rtl of dma is
 
 	component dma_state_machine is
 		Port (
-			clk			: in std_logic;
-			rst			: in std_logic;
+			clk					: in std_logic;
+			rst					: in std_logic;
 			
 			port_data			: inout	t_data;
 		   port_addr			: inout	STD_LOGIC_VECTOR(20 DOWNTO 0);
@@ -76,7 +81,8 @@ architecture rtl of dma is
 			
 			ctrl					: in		t_data;
          bus_rq				: out		STD_LOGIC;
-         bus_ak				: in		STD_LOGIC;			
+         bus_ak				: in		STD_LOGIC;	
+         reg					: in		STD_LOGIC;		
 		   ctrl_stop			: out		STD_LOGIC;
 		
 		   base_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
@@ -89,51 +95,32 @@ architecture rtl of dma is
 	-- REGISTERS --
 	signal registers	: t_registers := (others => (others =>'0'));
 	-- Base address RAM --
-	signal BASEM		: t_data;
-	signal BASEH		: t_data;
-	signal BASE			: std_logic_vector(23 downto 0);
+	signal BASEM		: t_data := (others => '0');
+	signal BASEH		: t_data := (others => '0');
+	signal BASE			: std_logic_vector(23 downto 0) := (others => '0');
 	-- Source address --
-	signal SRCL			: t_data;
-	signal SRCM			: t_data;
-	signal SRCH			: t_data;
-	signal SRC			: std_logic_vector(23 downto 0);
+	signal SRCL			: t_data := (others => '0');
+	signal SRCM			: t_data := (others => '0');
+	signal SRCH			: t_data := (others => '0');
+	signal SRC			: std_logic_vector(23 downto 0) := (others => '0');
 	-- Destunation address --
-	signal DSTL			: t_data;
-	signal DSTM			: t_data;
-	signal DSTH			: t_data;
-	signal DST			: std_logic_vector(23 downto 0);
+	signal DSTL			: t_data := (others => '0');
+	signal DSTM			: t_data := (others => '0');
+	signal DSTH			: t_data := (others => '0');
+	signal DST			: std_logic_vector(23 downto 0) := (others => '0');
 	-- Transfer length --
-	signal LENL			: t_data;
-	signal LENH			: t_data;
-	signal LENU			: t_data;
-	signal LEN			: std_logic_vector(23 downto 0);
+	signal LENL			: t_data := (others => '0');
+	signal LENH			: t_data := (others => '0');
+	signal LENU			: t_data := (others => '0');
+	signal LEN			: std_logic_vector(23 downto 0) := (others => '0');
 	-- Control register --
-	signal CTRL			: t_data;
+	signal CTRL			: t_data := (others => '0');
 	
 	signal ctrl_stop	: std_logic	:= '0';
 		
 begin	
 
 	i_dma_state_machine : dma_state_machine
---	port map (
---		clk					=> clk,
---		rst					=> rst,
---		ctrl					=> CTRL,
---		bus_ak				=> bus_ak,
---		base_address		=> BASE,
---		source_address		=> SRC,
---		destin_address		=> DST,
---		transfer_length	=> LEN,
---      reg					=> reg,
---		bus_rq				=> bus_rq,
---		ram_addr				=> ram_addr,
---		port_addr			=> port_addr,
---		ram_rw				=> ram_rw,
---		port_rw				=> port_rw,
---		ram_ce				=> ram_ce,
---		port_ce				=> port_ce,
---		ctrl_stop			=> ctrl_stop
---	);
 
 	port map(
 			clk					=> clk,
@@ -156,6 +143,7 @@ begin
 			ctrl					=> CTRL,
          bus_rq				=> bus_rq,
          bus_ak				=> bus_ak,
+			reg					=> reg,
 		   ctrl_stop			=> ctrl_stop,
 		
 		   base_address		=> BASE(20 downto 0),
@@ -166,7 +154,7 @@ begin
 
 	BASEM	<= registers(0);
 	BASEH	<= registers(1);
-	BASE	<= (c_addr_width downto 21 => '0') & BASEH & BASEM & (4 downto 0 => '0');
+	BASE	<= (c_addr_width - 1 downto 21 => '0') & BASEH & BASEM & (4 downto 0 => '0');
 	
 	SRCL	<= registers(2);
 	SRCM	<= registers(3);
@@ -196,7 +184,7 @@ begin
 				
 			elsif reg = '0' and port_ce = '0' then			-- If Chip Enable and Registers signals active
 				if 0 <= to_integer(unsigned(port_addr(3 downto 0))) and to_integer(unsigned(port_addr(3 downto 0))) <= 11 then	-- Safeguard: If address references a register
-					registers(to_integer(unsigned(port_addr(3 downto 0)))) <= data;
+					registers(to_integer(unsigned(port_addr(3 downto 0)))) <= port_data;
 				end if;
 			end if;
 		end if;
