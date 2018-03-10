@@ -47,8 +47,8 @@ ARCHITECTURE behavior OF tb_ram IS
            address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
-			  wr_en 		: in  	STD_LOGIC;
-			  rd_en 		: out  	STD_LOGIC;
+			  rd_en 		: in  	STD_LOGIC;
+			  wr_en 		: out  	STD_LOGIC;
 			  clk 		: in  	STD_LOGIC;
            rst 		: in  	STD_LOGIC);
     END COMPONENT;
@@ -82,8 +82,8 @@ BEGIN
           address => addr,
           ce => ce,
           rw => rw,
-          wr_en => wr_en,
           rd_en => rd_en,
+          wr_en => wr_en,
           clk => clk,
           rst => rst
         );
@@ -125,10 +125,10 @@ BEGIN
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
 			io_data_write <= std_logic_vector(v_addr(7 downto 0));
-			wr_en <= '1';
+			rd_en <= '1';
 			wait until rising_edge(clk);
 			v_addr := v_addr + 1;
-			wr_en <= '0';
+			rd_en <= '0';
 		end loop;
 		
 		ce <= '1';
@@ -137,6 +137,8 @@ BEGIN
 		addr <= std_logic_vector(v_addr);
 		--wait for clk_period * 9;
 		wait for clk_period * 10;
+		
+		
 		-- read test		
 		ce <= '0';
 		wait for clk_period/2;

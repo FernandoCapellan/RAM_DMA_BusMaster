@@ -40,44 +40,50 @@ ARCHITECTURE behavior OF tb_dma_state_machine IS
  
     COMPONENT dma_state_machine
     PORT(
-         clk : IN  std_logic;
-         rst : IN  std_logic;
-         ctrl : IN  std_logic_vector(7 downto 0);
-         bus_ak : IN  std_logic;
-         base_address : IN  std_logic_vector(23 downto 0);
-         source_address : IN  std_logic_vector(23 downto 0);
-         destin_address : IN  std_logic_vector(23 downto 0);
-         transfer_length : IN  std_logic_vector(23 downto 0);
-         bus_rq : OUT  std_logic;
-         ram_addr : OUT  std_logic_vector(23 downto 0);
-         port_addr : OUT  std_logic_vector(23 downto 0);
-         ram_rw : OUT  std_logic;
-         port_rw : OUT  std_logic;
-         ram_ce : OUT  std_logic;
-         port_ce : OUT  std_logic;
-         ctrl_stop : OUT  std_logic
+         clk					: IN		std_logic;
+         rst					: IN		std_logic;
+         ctrl					: IN  	t_data;
+         bus_ak				: IN  	std_logic;
+         base_address		: IN		t_addr;
+         source_address		: IN		t_addr;
+         destin_address		: IN		t_addr;
+         transfer_length	: IN		std_logic_vector(23 downto 0);
+         bus_rq				: OUT		std_logic;
+         ram_addr				: OUT		t_addr;
+         port_addr			: INOUT	t_addr;
+         ram_rw				: OUT		std_logic;
+         port_rw				: INOUT	std_logic;
+         ram_ce				: OUT		std_logic;
+         port_ce				: INOUT	std_logic;
+         ctrl_stop			: OUT		std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal clk : std_logic := '0';
-   signal rst : std_logic := '0';
-   signal ctrl : std_logic_vector(7 downto 0) := (others => '0');
-   signal bus_ak : std_logic := '0';
-   signal base_address : std_logic_vector(23 downto 0) := (others => '0');
-   signal source_address : std_logic_vector(23 downto 0) := (others => '0');
-   signal destin_address : std_logic_vector(23 downto 0) := (others => '0');
-   signal transfer_length : std_logic_vector(23 downto 0) := (others => '0');
+   signal clk 					: std_logic := '0';
+   signal rst 					: std_logic := '0';
+   signal ctrl 				: t_data := (others => '0');
+   signal bus_ak 				: std_logic := '0';
+   signal base_address 		: t_addr := (others => '0');
+   signal source_address 	: t_addr := (others => '0');
+   signal destin_address 	: t_addr := (others => '0');
+   signal transfer_length 	: t_addr := (others => '0');
+   signal reg 				: std_logic := '1';
+	
+	--BiDirs
+   signal port_addr		: t_addr;
+   signal port_ce			: std_logic;
+   signal port_rw			: std_logic;
 
  	--Outputs
    signal bus_rq : std_logic;
-   signal ram_addr : std_logic_vector(23 downto 0);
-   signal port_addr : std_logic_vector(23 downto 0);
+   signal ram_addr : t_addr;
+   --signal port_addr : std_logic_vector(23 downto 0);
    signal ram_rw : std_logic;
-   signal port_rw : std_logic;
+   --signal port_rw : std_logic;
    signal ram_ce : std_logic;
-   signal port_ce : std_logic;
+   --signal port_ce : std_logic;
    signal ctrl_stop : std_logic;
 
    -- Clock period definitions
@@ -95,6 +101,7 @@ BEGIN
           source_address => source_address,
           destin_address => destin_address,
           transfer_length => transfer_length,
+          reg => reg,
           bus_rq => bus_rq,
           ram_addr => ram_addr,
           port_addr => port_addr,

@@ -33,40 +33,57 @@ use common.constants.all;
 --use UNISIM.VComponents.all;
 
 entity dma is
-    Port ( data		: in	t_data;
-           port_addr	: inout	t_addr;
-           reg			: in		STD_LOGIC;
-           port_ce	: inout	STD_LOGIC;
-			  port_rw	: inout	STD_LOGIC;
-           bus_rq		: out		STD_LOGIC;
-           bus_ak		: in		STD_LOGIC;	
-			  ram_rw		: out		STD_LOGIC;		  
-           ram_ce		: out		STD_LOGIC;
-           ram_addr	: out		t_addr;			  
-			  clk			: in		STD_LOGIC;
-			  rst			: in		STD_LOGIC
+    Port ( port_data		: inout	t_data;
+           port_addr		: inout	t_addr;
+           port_ce		: inout	STD_LOGIC;
+			  port_rw		: inout	STD_LOGIC;
+			  port_rd_en	: in		STD_LOGIC;
+			  port_wr_en	: out		STD_LOGIC;
+           reg				: in		STD_LOGIC;
+           bus_rq			: out		STD_LOGIC;
+           bus_ak			: in		STD_LOGIC;
+			  ram_data		: inout	t_data;
+           ram_addr		: out		t_addr;
+           ram_ce			: out		STD_LOGIC;
+			  ram_rw			: out		STD_LOGIC;
+			  ram_rd_en		: out		STD_LOGIC;
+			  ram_wr_en		: in		STD_LOGIC;
+			  clk				: in		STD_LOGIC;
+			  rst				: in		STD_LOGIC
 			  );
 end dma;
 
 architecture rtl of dma is
 
 	component dma_state_machine is
-		Port ( clk					: in STD_LOGIC;
-				 rst					: in STD_LOGIC;
-				 ctrl					: in	t_data;
-				 bus_ak				: in	STD_LOGIC;
-				 base_address		: in	t_addr;
-				 source_address	: in	t_addr;
-				 destin_address	: in	t_addr;
-				 transfer_length	: in	STD_LOGIC_VECTOR (23 downto 0);
-				 bus_rq				: out	STD_LOGIC;
-				 ram_addr			: out	t_addr;
-				 port_addr			: out	t_addr;
-				 ram_rw				: out	STD_LOGIC;
-				 port_rw				: out	STD_LOGIC;
-				 ram_ce				: out	STD_LOGIC;
-				 port_ce				: out	STD_LOGIC;
-				 ctrl_stop			: out	STD_LOGIC);
+		Port (
+			clk			: in std_logic;
+			rst			: in std_logic;
+			
+			port_data			: inout	t_data;
+		   port_addr			: inout	STD_LOGIC_VECTOR(20 DOWNTO 0);
+		   port_ce				: inout	STD_LOGIC;
+		   port_rw				: inout	STD_LOGIC;
+		   port_rd_en			: in		STD_LOGIC;
+		   port_wr_en			: out		STD_LOGIC;
+			
+			ram_data				: inout	t_data;
+         ram_addr				: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
+         ram_ce				: out		STD_LOGIC;
+			ram_rw				: out		STD_LOGIC;
+			ram_rd_en			: out		STD_LOGIC;
+			ram_wr_en			: in		STD_LOGIC;
+			
+			ctrl					: in		t_data;
+         bus_rq				: out		STD_LOGIC;
+         bus_ak				: in		STD_LOGIC;			
+		   ctrl_stop			: out		STD_LOGIC;
+		
+		   base_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   source_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   destin_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   transfer_length	: in		STD_LOGIC_VECTOR (20 downto 0)
+		);
 	end component;
 
 	-- REGISTERS --
@@ -98,28 +115,58 @@ architecture rtl of dma is
 begin	
 
 	i_dma_state_machine : dma_state_machine
-	port map (
-		clk					=> clk,
-		rst					=> rst,
-		ctrl					=> CTRL,
-		bus_ak				=> bus_ak,
-		base_address		=> BASE,
-		source_address		=> SRC,
-		destin_address		=> DST,
-		transfer_length	=> LEN,
-		bus_rq				=> bus_rq,
-		ram_addr				=> ram_addr,
-		port_addr			=> port_addr,
-		ram_rw				=> ram_rw,
-		port_rw				=> port_rw,
-		ram_ce				=> ram_ce,
-		port_ce				=> port_ce,
-		ctrl_stop			=> ctrl_stop
-	);
+--	port map (
+--		clk					=> clk,
+--		rst					=> rst,
+--		ctrl					=> CTRL,
+--		bus_ak				=> bus_ak,
+--		base_address		=> BASE,
+--		source_address		=> SRC,
+--		destin_address		=> DST,
+--		transfer_length	=> LEN,
+--      reg					=> reg,
+--		bus_rq				=> bus_rq,
+--		ram_addr				=> ram_addr,
+--		port_addr			=> port_addr,
+--		ram_rw				=> ram_rw,
+--		port_rw				=> port_rw,
+--		ram_ce				=> ram_ce,
+--		port_ce				=> port_ce,
+--		ctrl_stop			=> ctrl_stop
+--	);
+
+	port map(
+			clk					=> clk,
+			rst					=> rst,
+			
+			port_data			=> port_data,
+		   port_addr			=> port_addr,
+		   port_ce				=> port_ce,
+		   port_rw				=> port_rw,
+		   port_rd_en			=> port_rd_en,
+		   port_wr_en			=> port_wr_en,
+			
+			ram_data				=> ram_data,
+         ram_addr				=> ram_addr,
+         ram_ce				=> ram_ce,
+			ram_rw				=> ram_rw,
+			ram_rd_en			=> ram_rd_en,
+			ram_wr_en			=> ram_wr_en,
+			
+			ctrl					=> CTRL,
+         bus_rq				=> bus_rq,
+         bus_ak				=> bus_ak,
+		   ctrl_stop			=> ctrl_stop,
+		
+		   base_address		=> BASE(20 downto 0),
+		   source_address		=> SRC(20 downto 0),
+		   destin_address		=> DST(20 downto 0),
+		   transfer_length	=> LEN(20 downto 0)
+		);
 
 	BASEM	<= registers(0);
 	BASEH	<= registers(1);
-	BASE	<= BASEH & BASEM & (7 downto 0 => '0');
+	BASE	<= (c_addr_width downto 21 => '0') & BASEH & BASEM & (4 downto 0 => '0');
 	
 	SRCL	<= registers(2);
 	SRCM	<= registers(3);
@@ -138,7 +185,7 @@ begin
 	
 	CTRL	<= registers(11);
 	
-	p_register : process (clk, rst, reg, port_ce,ctrl_stop) is
+	p_register : process (clk, rst, reg, port_ce, ctrl_stop) is
 	begin
 		if rising_edge(clk) then
 			if rst = '1' then

@@ -33,22 +33,34 @@ use common.constants.all;
 --use UNISIM.VComponents.all;
 
 entity dma_state_machine is
-    Port ( clk					: in STD_LOGIC;
-			  rst					: in STD_LOGIC;
-			  ctrl				: in	t_data;
-           bus_ak				: in	STD_LOGIC;
-           base_address		: in	t_addr;
-           source_address	: in	t_addr;
-           destin_address	: in	t_addr;
-           transfer_length	: in	STD_LOGIC_VECTOR (23 downto 0);
-           bus_rq				: out	STD_LOGIC;
-           ram_addr			: out	t_addr;
-           port_addr			: out	t_addr;
-           ram_rw				: out	STD_LOGIC;
-           port_rw			: out	STD_LOGIC;
-           ram_ce				: out	STD_LOGIC;
-           port_ce			: out	STD_LOGIC;
-           ctrl_stop			: out	STD_LOGIC);
+		Port (
+			clk			: in std_logic;
+			rst			: in std_logic;
+			
+			port_data			: inout	t_data;
+		   port_addr			: inout	STD_LOGIC_VECTOR(20 DOWNTO 0);
+		   port_ce				: inout	STD_LOGIC;
+		   port_rw				: inout	STD_LOGIC;
+		   port_rd_en			: in		STD_LOGIC;
+		   port_wr_en			: out		STD_LOGIC;
+			
+			ram_data				: inout	t_data;
+         ram_addr				: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
+         ram_ce				: out		STD_LOGIC;
+			ram_rw				: out		STD_LOGIC;
+			ram_rd_en			: out		STD_LOGIC;
+			ram_wr_en			: in		STD_LOGIC;
+			
+			ctrl					: in		t_data;
+         bus_rq				: out		STD_LOGIC;
+         bus_ak				: in		STD_LOGIC;			
+		   ctrl_stop			: out		STD_LOGIC;
+		
+		   base_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   source_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   destin_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
+		   transfer_length	: in		STD_LOGIC_VECTOR (20 downto 0)
+		);
 end dma_state_machine;
 
 architecture fsm of dma_state_machine is
@@ -62,6 +74,8 @@ architecture fsm of dma_state_machine is
       port_write_st,
       port_read_st,
       ram_write_st,
+      port_write_finish_st,
+		ram_write_finish_st,
       index_st
    );
 	
@@ -78,17 +92,18 @@ architecture fsm of dma_state_machine is
 	
    signal current_state				: state_type;
    signal next_state					: state_type;
-	signal transfer_len				: STD_LOGIC_VECTOR (23 downto 0) := (others => '0');
+	
+	signal transfer_len				: STD_LOGIC_VECTOR (20 downto 0) := (others => '0');
 
-	signal src, dst, base			: t_addr := (others => '0');
-	signal src_step, dst_step		: STD_LOGIC_VECTOR (23 downto 0);	
-	signal src_result, dst_result	: t_addr;
-
+	signal src, dst, base			: STD_LOGIC_VECTOR (20 DOWNTO 0) := (others => '0');
+	signal src_step, dst_step		: STD_LOGIC_VECTOR (20 DOWNTO 0);	
+	signal src_result, dst_result	: STD_LOGIC_VECTOR (20 DOWNTO 0);
+	
 begin
 
 	src_adder : a1_complement_adder 
 	GENERIC MAP (
-		g_bus_width => c_addr_width
+		g_bus_width => 21
 	)
 	PORT MAP (
 		address => src,
@@ -98,7 +113,7 @@ begin
 	
 	dst_adder : a1_complement_adder 
 	GENERIC MAP (
-		g_bus_width => 24
+		g_bus_width => 21
 	)
 	PORT MAP (
 		address => dst,
@@ -117,7 +132,7 @@ begin
       end if;
    end process clocked_proc;
 
-	nextstate_proc : process (ctrl, bus_ak, transfer_len, current_state) is
+nextstate_proc : process (current_state, ctrl, bus_ak) is
 	begin
 		case current_state is
 			when init_st =>
@@ -140,16 +155,24 @@ begin
 				else
 					next_state <= port_read_st;
 				end if;
+						
 			when ram_read_st =>
 				next_state <= port_write_st;
 			when port_write_st =>
-				next_state <= index_st;
+				next_state <= port_write_finish_st;
+			
 			when port_read_st =>
 				next_state <= ram_write_st;
 			when ram_write_st =>
+				next_state <= ram_write_finish_st;
+				
+			when port_write_finish_st =>
 				next_state <= index_st;
+			when ram_write_finish_st =>
+				next_state <= index_st;
+				
 			when index_st =>
-				if transfer_len = "000000000000000000000000" then 
+				if transfer_len <= "000000000000000000000" then 
 					next_state <= init_st;
 				elsif ctrl(1) = '1' then
 					next_state <= ram_read_st;
@@ -161,29 +184,36 @@ begin
 		end case;
 	end process nextstate_proc;
 
-
-	output_proc : process (current_state)
+output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_en)
    begin
-		bus_rq				<= '1';
-		--transfer_len		<= (others => '0');
-		ram_addr			<= (others => '0');
+		port_data			<= (others => 'Z');
 		port_addr			<= (others => 'Z');
-		ram_rw				<= '1';
 		port_rw				<= 'Z';
-		ram_ce				<= '1';
 		port_ce				<= 'Z';
+		bus_rq 				<= '1';
 		ctrl_stop			<= '0';	
-
-		--src				<= source_address;
-		src_step			<= (c_addr_width - 1 downto ctrl(4 downto 2)'length => ctrl(4 downto 2)(ctrl(4 downto 2)'high)) & ctrl(4 downto 2);
-		--dst				<= destin_address;
-		dst_step			<= (c_addr_width - 1 downto ctrl(7 downto 5)'length => ctrl(7 downto 5)(ctrl(7 downto 5)'high)) & ctrl(7 downto 5);
-		base				<= base_address;
 		
-      case current_state is				
+		src_step			<= (20 downto ctrl(4 downto 2)'length => ctrl(4 downto 2)(ctrl(4 downto 2)'high)) & ctrl(4 downto 2);
+		dst_step			<= (20 downto ctrl(7 downto 5)'length => ctrl(7 downto 5)(ctrl(7 downto 5)'high)) & ctrl(7 downto 5);
+
+
+		
+      case current_state is
+			when init_st =>
+				if ram_wr_en = '1' then
+					port_data	<= ram_data;
+				else
+					ram_data		<= port_data;		-- Slave passive listen
+				end if;
+				ram_addr		<= port_addr;
+				ram_ce		<= port_ce;
+				ram_rw		<= port_rw;
+				ram_rd_en	<= port_rd_en;
+				port_wr_en	<= ram_wr_en;
+						
 			when start_st =>
-            bus_rq <= '0';
-				ctrl_stop <= '1';
+            bus_rq 		<= '0';
+				ctrl_stop 	<= '1';
 			
 			when ak_wait_st =>
             bus_rq <= '1';
@@ -193,38 +223,48 @@ begin
 				src				<= source_address;
 				dst				<= destin_address;
 				transfer_len	<= transfer_length;
-			
+								
+				
 			when ram_read_st =>
 				ram_addr <= std_logic_vector(unsigned(src) + unsigned(base));
+				ram_ce <= '0';
 				ram_rw <= '1';
 				port_ce <= '1';
-				ram_ce <= '0';
 			
 			when port_write_st =>
+				port_data <= ram_data;
 				port_addr <= dst;
-				port_rw <= '0';
 				port_ce <= '0';
+				port_rw <= '0';
+				port_wr_en <= ram_wr_en;
 				ram_ce <= '1';
-			
+				
+				
 			when port_read_st =>
 				port_addr <= src;
-				port_rw <= '1';
 				port_ce <= '0';
+				port_rw <= '1';
 				ram_ce <= '1';
 			
 			when ram_write_st =>
-				ram_addr <= std_logic_vector(unsigned(dst) + unsigned(base));
-				ram_rw <= '0';
 				port_ce <= '1';
+				ram_data		<= port_data;
+				ram_addr <= std_logic_vector(unsigned(dst) + unsigned(base));
 				ram_ce <= '0';
+				ram_rw <= '0';
+				ram_rd_en	<= port_rd_en;
+				
+			
+			when port_write_finish_st =>
+				port_ce <= '1';
+			when ram_write_finish_st =>
+				ram_ce <= '1';
 			
 			when index_st =>
 				transfer_len <= std_logic_vector(unsigned(transfer_len) - 1);
 				src <= src_result;
 				dst <= dst_result;
-				ram_ce <= '1';
-				port_ce <= '1';
-								
+			
          when others =>
 				null;
       end case;

@@ -30,13 +30,14 @@ use UNISIM.VComponents.all;
 
 entity ram is
     Port ( data 		: inout  t_data;
-           address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
+           address 	: in  	STD_LOGIC_VECTOR(20 DOWNTO 0);
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
 			  rd_en 		: in  	STD_LOGIC;
 			  wr_en 		: out  	STD_LOGIC;
 			  clk 		: in  	STD_LOGIC;
-           rst 		: in  	STD_LOGIC);
+           rst 		: in  	STD_LOGIC
+			  );
 end ram;
 
 architecture rtl of ram is
@@ -54,18 +55,18 @@ architecture rtl of ram is
 	
 	signal I 				: t_data;
 	signal wr_en_ff_1, wr_en_ff_2		: std_logic := '0'; -- active = '0'
-	signal write_enable	: std_logic := '0';
+	signal read_port	: std_logic := '0';
 	
 begin
 
 	wr_en <= wr_en_ff_1;
-	write_enable <= rd_en and not rw and not ce;
+	read_port <= rd_en and not rw and not ce;
 		
 	i_ram_2mib : ram_2mib
 		PORT MAP (
 			clka => clk,
 			rsta => rst,
-			wea(0) => write_enable,
+			wea(0) => read_port,
 			addra => address,
 			dina => data,
 			douta => I

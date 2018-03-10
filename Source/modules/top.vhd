@@ -49,8 +49,8 @@ end top;
 architecture rtl of top is
 
 component dma
-    Port ( data		: in	t_data;
-           port_addr	: inout	STD_LOGIC_VECTOR (20 downto 0);
+    Port ( data		: in		t_data;
+           port_addr	: inout	t_addr;
            reg			: in		STD_LOGIC;
            port_ce	: inout	STD_LOGIC;
 			  port_rw	: inout	STD_LOGIC;
@@ -58,7 +58,7 @@ component dma
            bus_ak		: in		STD_LOGIC;	
 			  ram_rw		: out		STD_LOGIC;		  
            ram_ce		: out		STD_LOGIC;
-           ram_addr	: out		STD_LOGIC;			  
+           ram_addr	: out		t_addr;			  
 			  clk			: in		STD_LOGIC;
 			  rst			: in		STD_LOGIC
 			  );
@@ -66,7 +66,7 @@ end component;
 
 component ram
     Port ( data 		: inout  t_data;
-           address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
+           address 	: in  	t_addr;		--STD_LOGIC_VECTOR (20 downto 0)
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
 			  rd_en 		: in  	STD_LOGIC;
@@ -76,14 +76,17 @@ component ram
 			  );
 end component;
 
-	signal ram_rw, ram_ce, ram_addr : std_logic; -- Communication from DMA to RAM
+	-- Communication from DMA to RAM
+	signal ram_rw : std_logic; 
+	signal ram_ce : std_logic; 
+	signal ram_addr : t_addr; 
 
 begin
 	
 	i_dma : dma
 	port map (
 		data			=> data,
-		port_addr	=> address(20 downto 0),
+		port_addr	=> address,
 		reg			=> reg,
 		port_ce		=> ce,
 		port_rw		=> rw,
@@ -91,7 +94,9 @@ begin
 		bus_ak		=> bus_ak,
 		ram_rw		=> ram_rw,
 		ram_ce		=> ram_ce,
-		ram_addr		=> ram_addr
+		ram_addr		=> ram_addr,
+		clk			=> clk,
+		rst			=> rst
 	);
 
 	i_ram : ram
@@ -100,8 +105,8 @@ begin
 		address	=> ram_addr,
 		ce			=> ram_ce,
 		rw			=> ram_rw,
-		rd_en		=> rd_en,
-		wr_en		=> wr_en,
+		rd_en		=> wr_en,
+		wr_en		=> rd_en,
 		clk		=> clk,
 		rst		=> rst
 	);

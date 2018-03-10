@@ -1,4 +1,2 @@
 common	"common/constants.vhd"
-work	"modules/a1_complement_adder.vhd"
-work	"modules/dma.vhd"
 work	"modules/dma_state_machine.vhd"

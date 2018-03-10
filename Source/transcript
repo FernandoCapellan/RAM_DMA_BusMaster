@@ -1,11 +1,11 @@
 # Reading C:/Modeltech_pe_edu_10.4a/tcl/vsim/pref.tcl
-# do {tb_dma.fdo}
+# do {tb_dma_fsm_testing.fdo}
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # ** Warning: (vlib-34) Library already exists at "common".
 # 
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 21:54:51 on Mar 08,2018
+# Start time: 15:35:38 on Mar 10,2018
 # vcom -reportprogress 300 -explicit -93 -work common common/constants.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -13,10 +13,10 @@
 # -- Compiling package constants
 # -- Compiling package body constants
 # -- Loading package constants
-# End time: 21:54:51 on Mar 08,2018, Elapsed time: 0:00:00
+# End time: 15:35:38 on Mar 10,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 21:54:51 on Mar 08,2018
+# Start time: 15:35:38 on Mar 10,2018
 # vcom -reportprogress 300 -explicit -93 modules/a1_complement_adder.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -25,10 +25,10 @@
 # -- Loading package constants
 # -- Compiling entity a1_complement_adder
 # -- Compiling architecture rtl of a1_complement_adder
-# End time: 21:54:51 on Mar 08,2018, Elapsed time: 0:00:00
+# End time: 15:35:39 on Mar 10,2018, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 21:54:51 on Mar 08,2018
+# Start time: 15:35:39 on Mar 10,2018
 # vcom -reportprogress 300 -explicit -93 modules/dma_state_machine.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -37,31 +37,19 @@
 # -- Loading package constants
 # -- Compiling entity dma_state_machine
 # -- Compiling architecture fsm of dma_state_machine
-# End time: 21:54:51 on Mar 08,2018, Elapsed time: 0:00:00
+# End time: 15:35:39 on Mar 10,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 21:54:51 on Mar 08,2018
-# vcom -reportprogress 300 -explicit -93 modules/dma.vhd 
+# Start time: 15:35:39 on Mar 10,2018
+# vcom -reportprogress 300 -explicit -93 tb/tb_dma_fsm_testing.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
 # -- Loading package constants
-# -- Compiling entity dma
-# -- Compiling architecture rtl of dma
-# End time: 21:54:51 on Mar 08,2018, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
-# Start time: 21:54:51 on Mar 08,2018
-# vcom -reportprogress 300 -explicit -93 tb/tb_dma.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package constants
-# -- Compiling entity tb_dma
-# -- Compiling architecture behavior of tb_dma
-# End time: 21:54:51 on Mar 08,2018, Elapsed time: 0:00:00
+# -- Compiling entity tb_dma_fsm_testing
+# -- Compiling architecture behavior of tb_dma_fsm_testing
+# End time: 15:35:39 on Mar 10,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # //  ModelSim PE Student Edition 10.4a Apr  7 2015 
 # //
@@ -81,55 +69,99 @@
 # // THE ModelSim PE Student Edition IS NOT A SUPPORTED PRODUCT.
 # // FOR HIGHER EDUCATION PURPOSES ONLY
 # //
-# vsim -gui -do "do {tb_dma.fdo}" 
-# Start time: 21:54:51 on Mar 08,2018
+# vsim -gui -do "do {tb_dma_fsm_testing.fdo}" 
+# Start time: 15:35:39 on Mar 10,2018
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading common.constants(body)
-# Loading work.tb_dma(behavior)
-# Loading work.dma(rtl)
+# Loading work.tb_dma_fsm_testing(behavior)
 # Loading work.dma_state_machine(fsm)
 # Loading work.a1_complement_adder(rtl)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: fecp  Hostname: LTFECP  ProcessID: 4356
+# 
+#           Attempting to use alternate WLF file "./wlfttjhcw0".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlfttjhcw0
+# 
 # .main_pane.wave.interior.cs.body.pw.wf
 # .main_pane.structure.interior.cs.body.struct
 # .main_pane.objects.interior.cs.body.tree
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 0 ps  Iteration: 0  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 0 ps  Iteration: 0  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 285 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 505 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 315 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 545 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 345 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 585 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 345 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 585 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 375 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 625 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 375 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 625 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 405 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 665 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 405 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 665 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 665 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 705 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 665 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 705 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 685 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 755 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 685 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 755 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 715 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/src_adder
+#    Time: 815 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 715 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 855 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 745 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
+#    Time: 895 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+do C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb_fsm_testing.do
+restart
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /tb_dma_fsm_testing/uut/src_adder
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 775 ns  Iteration: 3  Instance: /tb_dma/uut/i_dma_state_machine/dst_adder
-# End time: 21:56:46 on Mar 08,2018, Elapsed time: 0:01:55
-# Errors: 0, Warnings: 18
+#    Time: 505 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 545 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 585 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 585 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 625 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 625 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 665 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 665 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 705 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 705 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 755 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/src_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 755 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 815 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 855 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 895 ns  Iteration: 3  Instance: /tb_dma_fsm_testing/uut/dst_adder
+run
+# End time: 15:36:34 on Mar 10,2018, Elapsed time: 0:00:55
+# Errors: 0, Warnings: 36

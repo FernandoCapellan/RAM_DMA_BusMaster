@@ -347,6 +347,22 @@ BEGIN
 				
 		-- READ FROM RAM FINISH
 		
+		wait for clk_period * 10;
+		
+		port_addr	<= (c_addr_width - 1 downto 5 => '0') & "01000";
+		data 			<= "10101010";		
+		port_ce		<= '0';
+		wait for clk_period;	
+		port_ce		<= '1';
+		
+		wait for clk_period;
+		
+		port_addr	<= (c_addr_width - 1 downto 5 => '0') & "10000";
+		data 			<= "01010101";		
+		port_ce		<= '0';
+		wait for clk_period;	
+		port_ce		<= '1';
+		
       wait;
    end process;
 
