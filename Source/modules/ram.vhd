@@ -29,7 +29,8 @@ library UNISIM;
 use UNISIM.VComponents.all;
 
 entity ram is
-    Port ( data 		: inout  t_data;
+    Port ( data_in	: in  	t_data;
+			  data_out	: out  	t_data;
            address 	: in  	STD_LOGIC_VECTOR(20 DOWNTO 0);
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
@@ -53,7 +54,6 @@ architecture rtl of ram is
 		);
 	END COMPONENT;
 	
-	signal I 				: t_data;
 	signal wr_en_ff_1, wr_en_ff_2		: std_logic := '0'; -- active = '0'
 	signal read_port	: std_logic := '0';
 	
@@ -68,18 +68,9 @@ begin
 			rsta => rst,
 			wea(0) => read_port,
 			addra => address,
-			dina => data,
-			douta => I
+			dina => data_in,
+			douta => data_out
 	);
-
-	p_impedance : process(wr_en_ff_1, I) is
-	begin
-		if wr_en_ff_1 = '1' then
-			data <= I;
-		else
-			data <= (others => 'Z');
-		end if;
-	end process p_impedance;
 
 	p_wr_en : process(clk) is
 	begin

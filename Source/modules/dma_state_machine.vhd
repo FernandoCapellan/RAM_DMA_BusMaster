@@ -44,7 +44,8 @@ entity dma_state_machine is
 		   port_rd_en			: in		STD_LOGIC;
 		   port_wr_en			: out		STD_LOGIC;
 			
-			ram_data				: inout	t_data;
+			ram_data_out		: in		t_data;
+			ram_data_in			: out		t_data;
          ram_addr				: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
          ram_ce				: out		STD_LOGIC;
 			ram_rw				: out		STD_LOGIC;
@@ -133,7 +134,7 @@ begin
       end if;
    end process clocked_proc;
 
-nextstate_proc : process (current_state, ctrl, bus_ak) is
+nextstate_proc : process (current_state, ctrl, bus_ak, transfer_len) is
 	begin
 		case current_state is
 			when init_st =>
@@ -186,7 +187,7 @@ nextstate_proc : process (current_state, ctrl, bus_ak) is
 	end process nextstate_proc;
 
 output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_en)
-   begin
+   begin			
 		port_data			<= (others => 'Z');
 		port_addr			<= (others => 'Z');
 		port_rw				<= 'Z';
@@ -194,17 +195,18 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 		bus_rq 				<= '1';
 		ctrl_stop			<= '0';	
 		
-		src_step			<= (20 downto ctrl(4 downto 2)'length => ctrl(4 downto 2)(ctrl(4 downto 2)'high)) & ctrl(4 downto 2);
-		dst_step			<= (20 downto ctrl(7 downto 5)'length => ctrl(7 downto 5)(ctrl(7 downto 5)'high)) & ctrl(7 downto 5);
+		src_step				<= (20 downto ctrl(4 downto 2)'length => ctrl(4 downto 2)(ctrl(4 downto 2)'high)) & ctrl(4 downto 2);
+		dst_step				<= (20 downto ctrl(7 downto 5)'length => ctrl(7 downto 5)(ctrl(7 downto 5)'high)) & ctrl(7 downto 5);
 		base <= base_address;
 
+		--ram_data_in			<= (others => '0');		
 		
       case current_state is
 			when init_st =>
 				if ram_wr_en = '1' then
-					port_data	<= ram_data;
+					port_data	<= ram_data_out;
 				else
-					ram_data		<= port_data;		-- Slave passive listen
+					ram_data_in	<= port_data;		-- Slave passive listen
 				end if;
 				ram_addr			<= port_addr;
 				if reg = '1' then
@@ -237,7 +239,7 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 				port_ce 			<= '1';
 			
 			when port_write_st =>
-				port_data 		<= ram_data;
+				port_data 		<= ram_data_out;
 				port_addr 		<= dst;
 				port_ce 			<= '0';
 				port_rw 			<= '0';
@@ -253,7 +255,7 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 			
 			when ram_write_st =>
 				port_ce 			<= '1';
-				ram_data			<= port_data;
+				ram_data_in		<= port_data;
 				ram_addr 		<= std_logic_vector(unsigned(dst) + unsigned(base));
 				ram_ce 			<= '0';
 				ram_rw 			<= '0';
@@ -267,7 +269,10 @@ output_proc : process (current_state, port_data, port_addr, port_rd_en, ram_wr_e
 				-- ram_rd_en	<= '0'; implicit: opposite module disables signal
 				
 			when index_st =>
-				transfer_len 	<= std_logic_vector(unsigned(transfer_len) - 1);
+				if current_state'event then
+					transfer_len 	<= std_logic_vector(unsigned(transfer_len) - 1);
+				end if;
+				--transfer_len 	<= std_logic_vector(unsigned(transfer_len) - 1);
 				src 				<= src_result;
 				dst 				<= dst_result;
 			

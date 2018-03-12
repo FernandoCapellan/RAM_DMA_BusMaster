@@ -8,7 +8,8 @@ add wave -noupdate /tb_dma_fsm_testing/port_ce
 add wave -noupdate /tb_dma_fsm_testing/port_rw
 add wave -noupdate /tb_dma_fsm_testing/port_rd_en
 add wave -noupdate /tb_dma_fsm_testing/port_wr_en
-add wave -noupdate /tb_dma_fsm_testing/ram_data
+add wave -noupdate /tb_dma_fsm_testing/uut/ram_data_out
+add wave -noupdate /tb_dma_fsm_testing/uut/ram_data_in
 add wave -noupdate /tb_dma_fsm_testing/ram_addr
 add wave -noupdate /tb_dma_fsm_testing/ram_ce
 add wave -noupdate /tb_dma_fsm_testing/ram_rw

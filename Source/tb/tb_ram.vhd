@@ -43,14 +43,16 @@ ARCHITECTURE behavior OF tb_ram IS
     -- Component Declaration for the Unit Under Test (UUT)
  
     COMPONENT ram
-    Port ( data 		: inout  t_data;
-           address 	: in  	STD_LOGIC_VECTOR (20 downto 0);
+    Port ( data_in	: in  	t_data;
+			  data_out	: out  	t_data;
+           address 	: in  	STD_LOGIC_VECTOR(20 DOWNTO 0);
            ce 			: in  	STD_LOGIC;
            rw 			: in  	STD_LOGIC;
 			  rd_en 		: in  	STD_LOGIC;
 			  wr_en 		: out  	STD_LOGIC;
 			  clk 		: in  	STD_LOGIC;
-           rst 		: in  	STD_LOGIC);
+           rst 		: in  	STD_LOGIC
+			  );
     END COMPONENT;
     
 
@@ -61,14 +63,16 @@ ARCHITECTURE behavior OF tb_ram IS
    signal wr_en : std_logic := '0';
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
+   signal data_in : t_data := (others => '0');
 
    --Outputs
    signal rd_en : std_logic := '0';
+   signal data_out : t_data := (others => '0');
 	
 	--BiDirs
-   signal io_data : t_data;
+   --signal io_data : t_data;
 	
-	signal io_data_write : t_data := (others => '0');
+	signal data_write : t_data := (others => '0');
 	
 
    -- Clock period definitions
@@ -78,7 +82,8 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: ram PORT MAP (
-          data => io_data,
+          data_in => data_in,
+          data_out => data_out,
           address => addr,
           ce => ce,
           rw => rw,
@@ -88,7 +93,7 @@ BEGIN
           rst => rst
         );
 		  
-	io_data <= io_data_write WHEN rw = '0' and ce = '0' else (others => 'Z');
+	--io_data <= io_data_write WHEN rw = '0' and ce = '0' else (others => 'Z');
 
    -- Clock process definitions
    clk_process :process
@@ -124,7 +129,7 @@ BEGIN
 		rw <= '0';
 		for i in 0 to 15 loop
 			addr <= std_logic_vector(v_addr);
-			io_data_write <= std_logic_vector(v_addr(7 downto 0));
+			data_in <= std_logic_vector(v_addr(7 downto 0));
 			rd_en <= '1';
 			wait until rising_edge(clk);
 			v_addr := v_addr + 1;

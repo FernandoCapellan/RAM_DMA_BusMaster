@@ -8,9 +8,10 @@ add wave -noupdate /tb_dma_test/port_data
 add wave -noupdate /tb_dma_test/port_addr
 add wave -noupdate /tb_dma_test/port_ce
 add wave -noupdate /tb_dma_test/port_rw
-add wave -noupdate /tb_dma_test/ram_data
 add wave -noupdate /tb_dma_test/port_rd_en
 add wave -noupdate /tb_dma_test/port_wr_en
+add wave -noupdate /tb_dma_test/uut/ram_data_out
+add wave -noupdate /tb_dma_test/uut/ram_data_in
 add wave -noupdate /tb_dma_test/ram_addr
 add wave -noupdate /tb_dma_test/ram_ce
 add wave -noupdate /tb_dma_test/ram_rw
@@ -50,4 +51,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {937363 ps} {1017491 ps}
+WaveRestoreZoom {993191 ps} {1000359 ps}

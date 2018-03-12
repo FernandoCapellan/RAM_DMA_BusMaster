@@ -44,7 +44,8 @@ entity dma is
 			  port_rd_en	: in		STD_LOGIC;
 			  port_wr_en	: out		STD_LOGIC;
 			  
-			  ram_data		: inout	t_data;
+			  ram_data_out	: in		t_data;
+			  ram_data_in	: out		t_data;
            ram_addr		: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
            ram_ce			: out		STD_LOGIC;
 			  ram_rw			: out		STD_LOGIC;
@@ -72,7 +73,8 @@ architecture rtl of dma is
 		   port_rd_en			: in		STD_LOGIC;
 		   port_wr_en			: out		STD_LOGIC;
 			
-			ram_data				: inout	t_data;
+			ram_data_out		: in		t_data;
+			ram_data_in			: out		t_data;
          ram_addr				: out		STD_LOGIC_VECTOR(20 DOWNTO 0);
          ram_ce				: out		STD_LOGIC;
 			ram_rw				: out		STD_LOGIC;
@@ -81,8 +83,8 @@ architecture rtl of dma is
 			
 			ctrl					: in		t_data;
          bus_rq				: out		STD_LOGIC;
-         bus_ak				: in		STD_LOGIC;	
-         reg					: in		STD_LOGIC;		
+         bus_ak				: in		STD_LOGIC;
+         reg					: in		STD_LOGIC;
 		   ctrl_stop			: out		STD_LOGIC;
 		
 		   base_address		: in		STD_LOGIC_VECTOR (20 DOWNTO 0);
@@ -133,7 +135,8 @@ begin
 		   port_rd_en			=> port_rd_en,
 		   port_wr_en			=> port_wr_en,
 			
-			ram_data				=> ram_data,
+			ram_data_out		=> ram_data_out,
+			ram_data_in			=> ram_data_in,
          ram_addr				=> ram_addr,
          ram_ce				=> ram_ce,
 			ram_rw				=> ram_rw,

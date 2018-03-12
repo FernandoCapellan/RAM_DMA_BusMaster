@@ -47,21 +47,22 @@ ARCHITECTURE behavior OF tb_dma_fsm_testing IS
          clk 					: IN  	std_logic;
          rst 					: IN  	std_logic;
 			
-         port_data 			: INOUT  std_logic_vector(7 downto 0);
+         port_data 			: INOUT  t_data;
          port_addr 			: INOUT  std_logic_vector(20 downto 0);
          port_ce 				: INOUT  std_logic;
          port_rw 				: INOUT  std_logic;
          port_rd_en 			: IN  	std_logic;
          port_wr_en 			: OUT  	std_logic;
 			
-         ram_data 			: INOUT  std_logic_vector(7 downto 0);
+			ram_data_out		: IN		t_data;
+			ram_data_in			: OUT		t_data;
          ram_addr 			: OUT  	std_logic_vector(20 downto 0);
          ram_ce 				: OUT  	std_logic;
          ram_rw 				: OUT  	std_logic;
          ram_rd_en 			: OUT  	std_logic;
          ram_wr_en 			: IN  	std_logic;
 			
-         ctrl 					: IN  	std_logic_vector(7 downto 0);
+         ctrl 					: IN  	t_data;
          bus_rq 				: OUT  	std_logic;
          bus_ak 				: IN  	std_logic;
          reg					: IN		std_logic;
@@ -79,8 +80,9 @@ ARCHITECTURE behavior OF tb_dma_fsm_testing IS
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
    signal port_rd_en : std_logic := '0';
+	signal ram_data_out : t_data := (others => '0');
    signal ram_wr_en : std_logic := '0';
-   signal ctrl : std_logic_vector(7 downto 0) := (others => '0');
+   signal ctrl : t_data := (others => '0');
    signal bus_ak : std_logic := '1';
    signal reg : std_logic := '1';
    signal base_address : std_logic_vector(20 downto 0) := (others => '0');
@@ -89,14 +91,15 @@ ARCHITECTURE behavior OF tb_dma_fsm_testing IS
    signal transfer_length : std_logic_vector(20 downto 0) := (others => '0');
 
 	--BiDirs
-   signal port_data : std_logic_vector(7 downto 0);
+   signal port_data : t_data;
    signal port_addr : std_logic_vector(20 downto 0);
    signal port_ce : std_logic;
    signal port_rw : std_logic;
-   signal ram_data : std_logic_vector(7 downto 0);
+   --signal ram_data : std_logic_vector(7 downto 0);
 
  	--Outputs
    signal port_wr_en : std_logic;
+   signal ram_data_in : t_data := (others => '0');
    signal ram_addr : std_logic_vector(20 downto 0);
    signal ram_ce : std_logic;
    signal ram_rw : std_logic;
@@ -114,33 +117,34 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: dma_state_machine PORT MAP (
-          clk => clk,
-          rst => rst,
+          clk 					=> clk,
+          rst 					=> rst,
 			 
-          port_data => port_data,
-          port_addr => port_addr,
-          port_ce => port_ce,
-          port_rw => port_rw,
-          port_rd_en => port_rd_en,
-          port_wr_en => port_wr_en,
+          port_data 			=> port_data,
+          port_addr 			=> port_addr,
+          port_ce 			=> port_ce,
+          port_rw 			=> port_rw,
+          port_rd_en 		=> port_rd_en,
+          port_wr_en 		=> port_wr_en,
 			 
-          ram_data => ram_data,
-          ram_addr => ram_addr,
-          ram_ce => ram_ce,
-          ram_rw => ram_rw,
-          ram_rd_en => ram_rd_en,
-          ram_wr_en => ram_wr_en,
+          ram_data_out 		=> ram_data_out,
+          ram_data_in 		=> ram_data_in,
+          ram_addr 			=> ram_addr,
+          ram_ce 				=> ram_ce,
+          ram_rw 				=> ram_rw,
+          ram_rd_en 			=> ram_rd_en,
+          ram_wr_en 			=> ram_wr_en,
 			 
-          ctrl => ctrl,
-          bus_rq => bus_rq,
-          bus_ak => bus_ak,
-			 reg => reg,
-          ctrl_stop => ctrl_stop,
+          ctrl 				=> ctrl,
+          bus_rq 				=> bus_rq,
+          bus_ak 				=> bus_ak,
+			 reg 					=> reg,
+          ctrl_stop 			=> ctrl_stop,
 			 
-          base_address => base_address,
-          source_address => source_address,
-          destin_address => destin_address,
-          transfer_length => transfer_length
+          base_address 		=> base_address,
+          source_address 	=> source_address,
+          destin_address 	=> destin_address,
+          transfer_length 	=> transfer_length
         );
 
    -- Clock process definitions
@@ -165,12 +169,13 @@ BEGIN
    stim_proc: process	
    begin
 		
-		port_data <= (others => 'Z');
-		port_addr <= (others => 'Z');
-		port_ce <= 'Z';
-		port_rw <= 'Z';
-		bus_ak <= '1';
-		ram_data <= (others => 'Z');
+		port_data 		<= (others => 'Z');
+		port_addr 		<= (others => 'Z');
+		port_ce 			<= 'Z';
+		port_rw 			<= 'Z';
+		bus_ak 			<= '1';
+		--ram_data_out	<= (others => '0');
+		--ram_data_in		<= (others => '0');
 		
 		wait until rst = '0';
 	
@@ -178,61 +183,61 @@ BEGIN
 		-- slave waiting for input
 		
 		-- writing as slave
-		port_data <= "01010101";
-		port_addr <= "000000000000000000000";
-		port_ce <= '0';
-		port_rw <= '0';
-		port_rd_en <= '1';
+		port_data 	<= "01010101";
+		port_addr 	<= "000000000000000000000";
+		port_ce 		<= '0';
+		port_rw		<= '0';
+		port_rd_en	<= '1';
       wait for clk_period;
 		
-		port_data <= (others => 'Z');
-		port_addr <= (others => 'Z');
-		port_ce <= '1';
-		port_rd_en <= '0';
+		port_data 	<= (others => 'Z');
+		port_addr 	<= (others => 'Z');
+		port_ce 		<= '1';
+		port_rd_en 	<= '0';
       wait for clk_period;
 		
-		port_data <= "00001111";
-		port_addr <= "000000000000000000001";
-		port_ce <= '0';
-		port_rw <= '0';
-		port_rd_en <= '1';
+		port_data 	<= "00001111";
+		port_addr 	<= "000000000000000000001";
+		port_ce 		<= '0';
+		port_rw 		<= '0';
+		port_rd_en 	<= '1';
       wait for clk_period;		
 		
-		port_data <= (others => 'Z');
-		port_addr <= (others => 'Z');
-		port_ce <= '1';
-		port_rd_en <= '0';
+		port_data 	<= (others => 'Z');
+		port_addr 	<= (others => 'Z');
+		port_ce 		<= '1';
+		port_rd_en 	<= '0';
 		
       wait for clk_period*10;
 		-- slave waiting for input
 		
 		-- reading as slave
-		port_addr <= "000000000000000000001";
-		port_ce <= '0';
-		port_rw <= '1';
+		port_addr 	<= "000000000000000000001";
+		port_ce 		<= '0';
+		port_rw 		<= '1';
       wait for clk_period;
 		
-		port_addr <= (others => 'Z');	
-		port_ce <= '1';
-		ram_data <= "00001111";
-		ram_wr_en <= '1';
+		port_addr 		<= (others => 'Z');	
+		port_ce 			<= '1';
+		ram_data_out 	<= "00001111";
+		ram_wr_en 		<= '1';
       wait for clk_period;	
 
-		port_addr <= "000000000000000000000";
-		port_ce <= '0';
-		port_rw <= '1';
-		ram_data <= (others => 'Z');
-		ram_wr_en <= '0';
+		port_addr 		<= "000000000000000000000";
+		port_ce 			<= '0';
+		port_rw 			<= '1';
+		ram_data_out 	<= (others => '0');
+		ram_wr_en 		<= '0';
       wait for clk_period;
 		
-		port_addr <= (others => 'Z');	
-		port_ce <= 'Z';
-		ram_data <= "01010101";
-		ram_wr_en <= '1';
+		port_addr 		<= (others => 'Z');	
+		port_ce 			<= 'Z';
+		ram_data_out	<= "01010101";
+		ram_wr_en 		<= '1';
       wait for clk_period;	
 		
-		ram_data <= (others => 'Z');
-		ram_wr_en <= '0';
+		ram_data_out 	<= (others => '0');
+		ram_wr_en 		<= '0';
 		--slave waiting for input
 		
 		wait for clk_period * 3;	
@@ -270,12 +275,12 @@ BEGIN
 			
 			--	RAM_WRITE_ST
 			wait for clk_period;
-			port_data <= std_logic_vector(to_unsigned(I * 2, c_data_width));
-			port_rd_en <= '1';
+			port_data 	<= std_logic_vector(to_unsigned(I * 2, c_data_width));
+			port_rd_en 	<= '1';
 			
 			--	RAM_WRITE_FINISH_ST
 			wait for clk_period;
-			port_rd_en <= '0';
+			port_rd_en 	<= '0';
 			
 			--	INDEX_ST
 			wait for clk_period;
@@ -283,8 +288,8 @@ BEGIN
 		end loop;
 		
 		port_data <= (others => 'Z');
-		port_ce <= 'Z';
-		port_rw <= 'Z';
+		port_ce 		<= 'Z';
+		port_rw 		<= 'Z';
 		-- INIT_ST
 		wait for clk_period * 3;
 		
@@ -321,8 +326,8 @@ BEGIN
 			
 			--	PORT_WRITE_ST
 			wait for clk_period;
-			ram_data <= std_logic_vector(to_unsigned(I * 10, c_data_width));
-			ram_wr_en <= '1';
+			ram_data_out 	<= std_logic_vector(to_unsigned(I * 10, c_data_width));
+			ram_wr_en 		<= '1';
 			
 			--	PORT_WRITE_FINISH_ST
 			wait for clk_period;
