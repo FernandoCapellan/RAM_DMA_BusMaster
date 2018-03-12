@@ -1,0 +1,13 @@
+Mon Mar 12 14:04:37 CET 2018
+Trace back: zoomrange: invalid range "2346160389100107365 ps -8895551816627370745 ps"
+    while executing
+"$w zoomrange $start $end"
+    (procedure "grid_mzoom" line 35)
+    invoked from within
+"grid_mzoom out $_w $_x $_y"
+    (procedure "Wave::ControlMouseWheel" line 8)
+    invoked from within
+"Wave::ControlMouseWheel .main_pane.wave.interior.cs.body.pw.wf.grid.row0,name.data -2002 410 -120 "
+    (command bound to event)
+  <2:C:/Modeltech_pe_edu_10.4a/win32pe_edu/tk8.5/bgerror.tcl:92: ::tkerror {zoomrange: invalid range "2346160389100107365 ps -8895551816627370745 ps"}
+  <1:eval:1: ::tk::dialog::error::bgerror {zoomrange: invalid range "2346160389100107365 ps -8895551816627370745 ps"}

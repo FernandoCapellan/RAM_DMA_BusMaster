@@ -76,11 +76,11 @@ begin
 	begin
 		if rising_edge(clk) then
 			if ce = '0' and rw = '1' then
-				wr_en_ff_2 <= '1';
+				wr_en_ff_1 <= '1';
 			else
-				wr_en_ff_2 <= '0';
+				wr_en_ff_1 <= '0';
 			end if;
-			wr_en_ff_1 <= wr_en_ff_2;
+			--wr_en_ff_1 <= wr_en_ff_2;
 		end if;
 	end process p_wr_en;
 	

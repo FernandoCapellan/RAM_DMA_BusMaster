@@ -106,16 +106,16 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
  
 	p_rst : process
    begin
      rst <= '1';
-     wait for 45 ns;
+     wait for 40 ns;
      rst <= '0';
      wait;
    end process p_rst;  
@@ -281,6 +281,7 @@ BEGIN
 		data 					<= "11011001";
 		wait for clk_period;							--	START_ST		
 		reg 					<= '1';
+		ce 					<= 'Z';
 		
 		wait until bus_rq = '0';					--	AK_WAIT_ST
 		wait for clk_period;
@@ -290,8 +291,7 @@ BEGIN
 		bus_ak				<= '1';
 		--address				<= (others => 'Z');
 		address				<= (c_addr_width - 1 downto 21 => '0') & (20 downto 0 => 'Z');
-		ce						<= 'Z';
-		
+				
 		for I in 0 to to_integer(unsigned(LEN)) loop		
 			
 			--	PORT_READ_ST
@@ -303,12 +303,13 @@ BEGIN
 			rd_en 			<= '1';
 			
 			--	RAM_WRITE_FINISH_ST
-			wait for clk_period;			
-			data 				<= (others => 'Z');
-			rd_en 			<= '0';
+--			wait for clk_period;			
+			
 			
 			--	INDEX_ST
 			wait for clk_period;
+			data 				<= (others => 'Z');
+			rd_en 			<= '0';
 			
 		end loop;
 		
@@ -401,7 +402,8 @@ BEGIN
 		ce 					<= '0';
 		address 				<= (c_addr_width - 1 downto 4 => '0') & "1011";		-- CTRL
 		data 					<= "00100111";
-		wait for clk_period;							--	START_ST		
+		wait for clk_period;							--	START_ST
+		ce						<= 'Z';	
 		reg 					<= '1';
 		data 					<= (others => 'Z');
 		wait until bus_rq = '0';					--	AK_WAIT_ST
@@ -412,18 +414,20 @@ BEGIN
 		bus_ak				<= '1';
 		-- address			<= (others => 'Z');
 		address 				<= (c_addr_width - 1 downto 21 => '0') & (20 downto 0 => 'Z');
-		ce						<= 'Z';
-		
+				
 		for I in 0 to to_integer(unsigned(LEN)) loop			
 		
 			--	RAM_READ_ST
+			wait for clk_period;
+			
+			--	RAM_READ_FINISH_ST
 			wait for clk_period;
 			
 			--	PORT_WRITE_ST
 			wait for clk_period;
 			
 			--	PORT_WRITE_FINISH_ST
-			wait for clk_period;
+--			wait for clk_period;
 			
 			--	INDEX_ST
 			wait for clk_period;

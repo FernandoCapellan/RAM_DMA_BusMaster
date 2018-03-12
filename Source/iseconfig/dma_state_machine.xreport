@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-03-11T00:08:28</DateModified>
-  <ModuleName>dma</ModuleName>
-  <SummaryTimeStamp>2018-03-10T21:00:17</SummaryTimeStamp>
+  <DateModified>2018-03-12T17:23:34</DateModified>
+  <ModuleName>top</ModuleName>
+  <SummaryTimeStamp>2018-03-12T14:00:58</SummaryTimeStamp>
   <SavedFilePath>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/iseconfig/dma_state_machine.xreport</SavedFilePath>
   <ImplementationReportsDirectory>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source\</ImplementationReportsDirectory>
-  <DateInitialized>2018-03-10T19:28:58</DateInitialized>
+  <DateInitialized>2018-03-12T17:23:33</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
  <body>

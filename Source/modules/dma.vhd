@@ -95,30 +95,31 @@ architecture rtl of dma is
 	end component;
 
 	-- REGISTERS --
-	signal registers	: t_registers := (others => (others =>'0'));
+	signal registers		: t_registers := (others => (others =>'0'));
 	-- Base address RAM --
-	signal BASEM		: t_data := (others => '0');
-	signal BASEH		: t_data := (others => '0');
-	signal BASE			: std_logic_vector(23 downto 0) := (others => '0');
+	signal BASEM			: t_data := (others => '0');
+	signal BASEH			: t_data := (others => '0');
+	signal BASE				: std_logic_vector(23 downto 0) := (others => '0');
 	-- Source address --
-	signal SRCL			: t_data := (others => '0');
-	signal SRCM			: t_data := (others => '0');
-	signal SRCH			: t_data := (others => '0');
-	signal SRC			: std_logic_vector(23 downto 0) := (others => '0');
+	signal SRCL				: t_data := (others => '0');
+	signal SRCM				: t_data := (others => '0');
+	signal SRCH				: t_data := (others => '0');
+	signal SRC				: std_logic_vector(23 downto 0) := (others => '0');
 	-- Destunation address --
-	signal DSTL			: t_data := (others => '0');
-	signal DSTM			: t_data := (others => '0');
-	signal DSTH			: t_data := (others => '0');
-	signal DST			: std_logic_vector(23 downto 0) := (others => '0');
+	signal DSTL				: t_data := (others => '0');
+	signal DSTM				: t_data := (others => '0');
+	signal DSTH				: t_data := (others => '0');
+	signal DST				: std_logic_vector(23 downto 0) := (others => '0');
 	-- Transfer length --
-	signal LENL			: t_data := (others => '0');
-	signal LENH			: t_data := (others => '0');
-	signal LENU			: t_data := (others => '0');
-	signal LEN			: std_logic_vector(23 downto 0) := (others => '0');
+	signal LENL				: t_data := (others => '0');
+	signal LENH				: t_data := (others => '0');
+	signal LENU				: t_data := (others => '0');
+	signal LEN				: std_logic_vector(23 downto 0) := (others => '0');
+	signal transfer_len	: std_logic_vector(23 downto 0) := (others => '0');
 	-- Control register --
-	signal CTRL			: t_data := (others => '0');
+	signal CTRL				: t_data := (others => '0');
 	
-	signal ctrl_stop	: std_logic	:= '0';
+	signal ctrl_stop		: std_logic	:= '0';
 		
 begin	
 
@@ -152,7 +153,7 @@ begin
 		   base_address		=> BASE(20 downto 0),
 		   source_address		=> SRC(20 downto 0),
 		   destin_address		=> DST(20 downto 0),
-		   transfer_length	=> LEN(20 downto 0)
+		   transfer_length	=> transfer_len(20 downto 0)
 		);
 
 	BASEM	<= registers(0);
@@ -173,6 +174,7 @@ begin
 	LENH	<= registers(9);
 	LENU	<= registers(10);
 	LEN	<= LENU & LENH & LENL;
+	transfer_len <= std_logic_vector(unsigned(LEN) - 1);
 	
 	CTRL	<= registers(11);
 	
