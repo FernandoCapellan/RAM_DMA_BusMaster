@@ -1,0 +1,96 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source
+Ea1_complement_adder
+Z1 w1520543201
+Z2 DPx6 common 9 constants 0 22 ?=QjIVa;eG<mcAl42X`>10
+Z3 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z6 8modules/a1_complement_adder.vhd
+Z7 Fmodules/a1_complement_adder.vhd
+l0
+L31
+V:^LiR^a>S:06=X<<gE>LL2
+!s100 L;oEd<kGQ;PCb@@5=P<mz3
+Z8 OP;C;10.4a;61
+31
+Z9 !s110 1520966084
+!i10b 1
+Z10 !s108 1520966084.000000
+Z11 !s90 -reportprogress|300|-explicit|-93|modules/a1_complement_adder.vhd|
+Z12 !s107 modules/a1_complement_adder.vhd|
+!i113 1
+Z13 o-explicit -93 -O0
+Z14 tExplicit 1
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 19 a1_complement_adder 0 22 :^LiR^a>S:06=X<<gE>LL2
+l55
+L42
+VG95Qi6]JQ72WA2ghdEZS63
+!s100 jB]]76Wb>>NWK17UGgPdK2
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+R13
+R14
+Etb_a1_complement_adder
+R1
+R2
+R3
+R4
+R5
+R0
+Z15 8tb/tb_a1_complement_adder.vhd
+Z16 Ftb/tb_a1_complement_adder.vhd
+l0
+L38
+Ve<:W@E72L9FRj4c4D5OSC2
+!s100 ]GYl>UakLPznMLUOVTk3<0
+R8
+31
+R9
+!i10b 1
+R10
+Z17 !s90 -reportprogress|300|-explicit|-93|tb/tb_a1_complement_adder.vhd|
+Z18 !s107 tb/tb_a1_complement_adder.vhd|
+!i113 1
+R13
+R14
+Abehavior
+R2
+R3
+R4
+R5
+DEx4 work 22 tb_a1_complement_adder 0 22 e<:W@E72L9FRj4c4D5OSC2
+l70
+L41
+Vi8<^51a<b@cgLE5T2O7FJ1
+!s100 <LaLlUzJ]j3gOL]mADK[S0
+R8
+31
+R9
+!i10b 1
+R10
+R17
+R18
+!i113 1
+R13
+R14

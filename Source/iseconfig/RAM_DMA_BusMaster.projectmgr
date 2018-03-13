@@ -24,26 +24,24 @@
          <ClosedNode>Design Utilities</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem></SelectedItem>
+         <SelectedItem/>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem></CurrentItem>
+      <CurrentItem/>
    </ItemView>
    <ItemView guiview="File" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
       </ClosedNodes>
-      <SelectedItems>
-         <SelectedItem>constants.vhd</SelectedItem>
-      </SelectedItems>
+      <SelectedItems/>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000000000000000100000000000000000000000000000000000001ff000000040101000100000000000000000000000064ffffffff000000810000000000000004000000420000000100000000000000240000000100000000000000660000000100000000000001330000000100000000</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000000000000000100000000000000000000000000000000000001bd000000040101000100000000000000000000000064ffffffff000000810000000000000004000000cf0000000100000000000000240000000100000000000000660000000100000000000000640000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>constants.vhd</CurrentItem>
+      <CurrentItem>a1_complement_adder.vhd</CurrentItem>
    </ItemView>
    <ItemView guiview="Library" >
       <ClosedNodes>
@@ -59,7 +57,7 @@
       <CurrentItem>constants.vhd</CurrentItem>
    </ItemView>
    <SourceProcessView>000000ff0000000000000002000000fc000000bb01000000050100000002</SourceProcessView>
-   <CurrentView>Implementation</CurrentView>
+   <CurrentView>Behavioral Simulation</CurrentView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
@@ -74,7 +72,7 @@
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000e4000000010000000100000000000000000000000064ffffffff000000810000000000000001000000e40000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
       <CurrentItem></CurrentItem>
    </ItemView>
@@ -84,9 +82,14 @@
          <ClosedNode>/tb_a1_complement_adder - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_a1_complement_adder.vhd</ClosedNode>
          <ClosedNode>/tb_dma - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma.vhd</ClosedNode>
          <ClosedNode>/tb_dma_fsm_testing - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_fsm_testing.vhd/uut - dma_state_machine - fsm</ClosedNode>
+         <ClosedNode>/tb_dma_fsm_testing - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd</ClosedNode>
+         <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd</ClosedNode>
          <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd/uut - dma_state_machine - fsm</ClosedNode>
+         <ClosedNode>/tb_dma_test - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma.vhd</ClosedNode>
          <ClosedNode>/tb_dma_test - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_test.vhd/uut - dma - rtl/i_dma_state_machine - dma_state_machine - fsm</ClosedNode>
+         <ClosedNode>/tb_ram - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_ram.vhd</ClosedNode>
          <ClosedNode>/tb_ram - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_ram.vhd/uut - ram - rtl</ClosedNode>
+         <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd</ClosedNode>
          <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd/uut - top - rtl</ClosedNode>
          <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd/uut - top - rtl/i_dma - dma - rtl</ClosedNode>
          <ClosedNode>/top - rtl C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|modules|top.vhd</ClosedNode>
@@ -95,28 +98,15 @@
          <ClosedNode>/top - rtl C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|modules|top.vhd/i_ram - ram - rtl</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>uut - top - rtl (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/modules/top.vhd)</SelectedItem>
+         <SelectedItem>xc6vlx550t-1ff1759</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001fb000000020000000000000000000000000200000064ffffffff000000810000000300000002000001fb0000000100000003000000000000000100000003</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001ae000000020000000000000000000000000200000064ffffffff000000810000000300000002000001ae0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>uut - top - rtl (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/modules/top.vhd)</CurrentItem>
+      <CurrentItem>xc6vlx550t-1ff1759</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
-      <ClosedNodes>
-         <ClosedNodesVersion>1</ClosedNodesVersion>
-      </ClosedNodes>
-      <SelectedItems>
-         <SelectedItem/>
-      </SelectedItems>
-      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
-      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
-      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
-   </ItemView>
-   <ItemView engineview="BehavioralSim" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
       </ClosedNodes>
@@ -128,6 +118,19 @@
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
       <CurrentItem></CurrentItem>
+   </ItemView>
+   <ItemView engineview="BehavioralSim" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>Simulate Behavioral Model</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>Simulate Behavioral Model</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_XCO" guiview="Process" >
       <ClosedNodes>
