@@ -150,16 +150,16 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
  
 	p_rst : process
    begin
      rst <= '1';
-     wait for 45 ns;
+     wait for 40 ns;
      rst <= '0';
      wait;
    end process p_rst;
@@ -253,15 +253,14 @@ BEGIN
       wait for clk_period;
 		ctrl					<= "11011001"; 						-- SRC autoinc: -1; DST autoinc: -1; Mode: Read from port; Start: Enabled;
 		
-		wait until bus_rq = '0' and ctrl_stop = '1';
-		
 		-- START_ST
+		wait until bus_rq = '0' and ctrl_stop = '1';		
 		wait for clk_period;
 		ctrl(0) 				<= '0';	
 		
 		-- AK_WAIT_ST
-		wait for (clk_period * 1) - clk_period;
 		bus_ak				<= '0';
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
 		
 		-- TRANSFER_ST
       wait for clk_period;
@@ -304,15 +303,14 @@ BEGIN
       wait for clk_period;
 		ctrl					<= "00100111"; 					-- SRC autoinc: 1; DST autoinc: 1; Mode: Read from RAM; Start: Enabled;
 		
-		wait until bus_rq = '0' and ctrl_stop = '1';
-		
 		-- START_ST
+		wait until bus_rq = '0' and ctrl_stop = '1';		
 		wait for clk_period;
 		ctrl(0) 				<= '0';	
 		
 		-- AK_WAIT_ST
-		wait for (clk_period * 1) - clk_period;
 		bus_ak				<= '0';
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
 		
 		-- TRANSFER_ST
       wait for clk_period;

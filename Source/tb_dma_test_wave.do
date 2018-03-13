@@ -24,9 +24,8 @@ add wave -noupdate /tb_dma_test/LENU
 add wave -noupdate /tb_dma_test/LEN
 add wave -noupdate -divider FSM
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/transfer_len
+add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/state
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/ctrl_stop
-add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/current_state
-add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/next_state
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/base_address
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/src
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/dst
@@ -35,9 +34,9 @@ add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/source_address
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/destin_address
 add wave -noupdate /tb_dma_test/uut/i_dma_state_machine/transfer_length
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {978388 ps} 0}
+WaveRestoreCursors {{Cursor 1} {405000 ps} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 259
+configure wave -namecolwidth 357
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
@@ -51,4 +50,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {993191 ps} {1000359 ps}
+WaveRestoreZoom {329104 ps} {419686 ps}

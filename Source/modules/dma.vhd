@@ -115,7 +115,7 @@ architecture rtl of dma is
 	signal LENH				: t_data := (others => '0');
 	signal LENU				: t_data := (others => '0');
 	signal LEN				: std_logic_vector(23 downto 0) := (others => '0');
-	signal transfer_len	: std_logic_vector(23 downto 0) := (others => '0');
+	--signal transfer_len	: std_logic_vector(23 downto 0) := (others => '0');
 	-- Control register --
 	signal CTRL				: t_data := (others => '0');
 	
@@ -153,7 +153,7 @@ begin
 		   base_address		=> BASE(20 downto 0),
 		   source_address		=> SRC(20 downto 0),
 		   destin_address		=> DST(20 downto 0),
-		   transfer_length	=> transfer_len(20 downto 0)
+		   transfer_length	=> LEN(20 downto 0)
 		);
 
 	BASEM	<= registers(0);
@@ -174,7 +174,7 @@ begin
 	LENH	<= registers(9);
 	LENU	<= registers(10);
 	LEN	<= LENU & LENH & LENL;
-	transfer_len <= std_logic_vector(unsigned(LEN) - 1);
+	--transfer_len <= std_logic_vector(unsigned(LEN) - 1);
 	
 	CTRL	<= registers(11);
 	

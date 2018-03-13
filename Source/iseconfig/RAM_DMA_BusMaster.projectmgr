@@ -24,13 +24,13 @@
          <ClosedNode>Design Utilities</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem/>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView guiview="File" >
       <ClosedNodes>
@@ -70,26 +70,24 @@
          <ClosedNode>User Constraints</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Synthesize - XST</SelectedItem>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>Synthesize - XST</CurrentItem>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" guiview="Source" compilemode="AutoCompile" >
       <ClosedNodes>
          <ClosedNodesVersion>2</ClosedNodesVersion>
          <ClosedNode>/tb_a1_complement_adder - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_a1_complement_adder.vhd</ClosedNode>
          <ClosedNode>/tb_dma - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma.vhd</ClosedNode>
-         <ClosedNode>/tb_dma_fsm_testing - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_fsm_testing.vhd</ClosedNode>
          <ClosedNode>/tb_dma_fsm_testing - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_fsm_testing.vhd/uut - dma_state_machine - fsm</ClosedNode>
-         <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd</ClosedNode>
          <ClosedNode>/tb_dma_state_machine - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_state_machine.vhd/uut - dma_state_machine - fsm</ClosedNode>
          <ClosedNode>/tb_dma_test - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_dma_test.vhd/uut - dma - rtl/i_dma_state_machine - dma_state_machine - fsm</ClosedNode>
          <ClosedNode>/tb_ram - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_ram.vhd/uut - ram - rtl</ClosedNode>
-         <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd</ClosedNode>
+         <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd/uut - top - rtl</ClosedNode>
          <ClosedNode>/tb_top - behavior C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|tb|tb_top.vhd/uut - top - rtl/i_dma - dma - rtl</ClosedNode>
          <ClosedNode>/top - rtl C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|modules|top.vhd</ClosedNode>
          <ClosedNode>/top - rtl C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|modules|top.vhd/i_dma - dma - rtl</ClosedNode>
@@ -97,13 +95,13 @@
          <ClosedNode>/top - rtl C:|Users|FECP|Documents|Fernando|VHDL|RAM_DMA_BusMaster|Source|modules|top.vhd/i_ram - ram - rtl</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>tb_top - behavior (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_top.vhd)</SelectedItem>
+         <SelectedItem>uut - top - rtl (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/modules/top.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001fb000000020000000000000000000000000200000064ffffffff000000810000000300000002000001fb0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>tb_top - behavior (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/tb/tb_top.vhd)</CurrentItem>
+      <CurrentItem>uut - top - rtl (C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/modules/top.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -123,13 +121,13 @@
          <ClosedNodesVersion>1</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Simulate Behavioral Model</SelectedItem>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>Simulate Behavioral Model</CurrentItem>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_XCO" guiview="Process" >
       <ClosedNodes>

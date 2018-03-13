@@ -135,16 +135,16 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
 
 	p_rst : process
    begin
      rst <= '1';
-     wait for 45 ns;
+     wait for 40 ns;
      rst <= '0';
      wait;
    end process p_rst;
@@ -326,6 +326,7 @@ BEGIN
 		wait until bus_rq = '0';
 		wait for clk_period;
 		bus_ak				<= '0';
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
 			
 		--	TRANSFER_ST
 		wait for clk_period;
@@ -344,12 +345,12 @@ BEGIN
 			port_rd_en 		<= '1';
 			
 			--	RAM_WRITE_FINISH_ST
-			wait for clk_period;			
-			port_data 		<= (others => 'Z');
-			port_rd_en 		<= '1';
+			--wait for clk_period;	
 			
 			--	INDEX_ST
-			wait for clk_period;
+			wait for clk_period;					
+			port_data 		<= (others => 'Z');
+			port_rd_en 		<= '1';
 			
 		end loop;
 		
@@ -451,6 +452,7 @@ BEGIN
 		wait until bus_rq = '0';
 		wait for clk_period;
 		bus_ak				<= '0';
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
 			
 		--	TRANSFER_ST
 		wait for clk_period;
@@ -462,14 +464,15 @@ BEGIN
 
 			--	RAM_READ_ST
 			wait for clk_period;
-				
+			
+			-- RAM_READ__FINISH_ST
+			wait for clk_period;
+			ram_wr_en 		<= '1';
+			wait for 0.1 ns;
+			ram_data_out	<= std_logic_vector(to_unsigned(I * 2, c_data_width));
+			
 			--	PORT_WRITE_ST
 			wait for clk_period;
-			ram_data_out	<= std_logic_vector(to_unsigned(I * 2, c_data_width));
-			ram_wr_en 		<= '1';
-			
-			--	PORT_WRITE_FINISH_ST
-			wait for clk_period;			
 			ram_data_out	<= (others => 'Z');
 			ram_wr_en 		<= '0';
 			

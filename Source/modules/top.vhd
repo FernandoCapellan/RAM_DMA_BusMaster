@@ -136,15 +136,5 @@ begin
 	);
 	
 	
-
---	p_impedance : process(ram_wr_en, ram_data_out) is
---	begin
---		if ram_wr_en = '1' then
---			ram_data_in <= ram_data_out;
---		else
---			ram_data_in <= (others => 'Z');
---		end if;
---	end process p_impedance;
-	
 end rtl;
 

@@ -282,6 +282,7 @@ BEGIN
 		wait for clk_period;							--	START_ST		
 		reg 					<= '1';
 		ce 					<= 'Z';
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
 		
 		wait until bus_rq = '0';					--	AK_WAIT_ST
 		wait for clk_period;
@@ -406,6 +407,8 @@ BEGIN
 		ce						<= 'Z';	
 		reg 					<= '1';
 		data 					<= (others => 'Z');
+		LEN 					<= std_logic_vector(unsigned(LEN) - 1);
+		
 		wait until bus_rq = '0';					--	AK_WAIT_ST
 		wait for clk_period;
 		bus_ak				<= '0';
