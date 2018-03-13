@@ -201,33 +201,43 @@ BEGIN
 		-- slave waiting for input
 		
 		-- reading as slave
-		port_addr 			<= "000000000000000000001";
-		port_ce 				<= '0';
-		port_rw 				<= '1';
+		port_addr 	<= "000000000000000000001";
+		port_ce 		<= '0';
+		port_rw 		<= '1';
       wait for clk_period;
 		
-		port_addr 			<= (others => 'Z');	
-		port_ce 				<= '1';
-		ram_data_out		<= "00001111";
-		ram_wr_en 			<= '1';
-      wait for clk_period;	
+		port_addr 		<= (others => 'Z');	
+		port_ce 			<= '1';
+		wait for 0.1 ns;
+		ram_data_out 	<= "00001111";
+		
+      wait for clk_period - 0.1 ns;
 
-		port_addr 			<= "000000000000000000000";
-		port_ce 				<= '0';
-		port_rw 				<= '1';
-		ram_data_out		<= (others => '0');
-		ram_wr_en 			<= '0';
-      wait for clk_period;
+		ram_wr_en 		<= '1';
+		port_addr 		<= "000000000000000000000";
+		port_ce 			<= '0';
+		port_rw 			<= '1';
 		
-		port_addr 			<= (others => 'Z');	
-		port_ce 				<= 'Z';
-		port_rw 				<= 'Z';
-		ram_data_out		<= "01010101";
-		ram_wr_en 			<= '1';
-      wait for clk_period;	
+		wait for 0.1 ns;
+		ram_data_out 	<= (others => '0');
 		
-		ram_data_out		<= (others => '0');
-		ram_wr_en 			<= '0';
+      wait for clk_period - 0.1 ns;
+		ram_wr_en 		<= '0';
+		
+		port_addr 		<= (others => 'Z');	
+		port_ce 			<= 'Z';
+		wait for 0.1 ns;
+		ram_data_out	<= "01010101";
+		
+      wait for clk_period - 0.1 ns;
+		ram_wr_en 		<= '1';
+		
+		wait for 0.1 ns;		
+		ram_data_out 	<= (others => '0');
+		
+      wait for clk_period - 0.1 ns;
+		ram_wr_en 		<= '0';
+		port_rw 			<= 'Z';
 		--slave waiting for input
 		
 		wait for clk_period * 3;

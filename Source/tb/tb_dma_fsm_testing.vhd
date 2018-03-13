@@ -219,24 +219,34 @@ BEGIN
 		
 		port_addr 		<= (others => 'Z');	
 		port_ce 			<= '1';
+		wait for 0.1 ns;
 		ram_data_out 	<= "00001111";
-		ram_wr_en 		<= '1';
-      wait for clk_period;	
+		
+      wait for clk_period - 0.1 ns;
 
+		ram_wr_en 		<= '1';
 		port_addr 		<= "000000000000000000000";
 		port_ce 			<= '0';
 		port_rw 			<= '1';
+		
+		wait for 0.1 ns;
 		ram_data_out 	<= (others => '0');
+		
+      wait for clk_period - 0.1 ns;
 		ram_wr_en 		<= '0';
-      wait for clk_period;
 		
 		port_addr 		<= (others => 'Z');	
 		port_ce 			<= 'Z';
+		wait for 0.1 ns;
 		ram_data_out	<= "01010101";
-		ram_wr_en 		<= '1';
-      wait for clk_period;	
 		
+      wait for clk_period - 0.1 ns;
+		ram_wr_en 		<= '1';
+		
+		wait for 0.1 ns;		
 		ram_data_out 	<= (others => '0');
+		
+      wait for clk_period - 0.1 ns;
 		ram_wr_en 		<= '0';
 		--slave waiting for input
 		
@@ -277,12 +287,11 @@ BEGIN
 			port_data 	<= std_logic_vector(to_unsigned(I * 2, c_data_width));
 			port_rd_en 	<= '1';
 			
-			--	RAM_WRITE_FINISH_ST
-			wait for clk_period;
-			port_rd_en 	<= '0';
-			
 			--	INDEX_ST
 			wait for clk_period;
+			port_data 	<= (others => 'Z');
+			port_rd_en 	<= '0';
+			
 			
 		end loop;
 		
