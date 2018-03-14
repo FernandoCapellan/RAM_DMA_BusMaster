@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-03-14T01:05:23</DateModified>
+  <DateModified>2018-03-14T09:17:25</DateModified>
   <ModuleName>top</ModuleName>
-  <SummaryTimeStamp>2018-03-14T00:24:10</SummaryTimeStamp>
+  <SummaryTimeStamp>2018-03-14T08:27:32</SummaryTimeStamp>
   <SavedFilePath>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source/iseconfig/top.xreport</SavedFilePath>
   <ImplementationReportsDirectory>C:/Users/FECP/Documents/Fernando/VHDL/RAM_DMA_BusMaster/Source\</ImplementationReportsDirectory>
   <DateInitialized>2018-03-14T00:22:27</DateInitialized>
